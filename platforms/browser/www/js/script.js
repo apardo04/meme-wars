@@ -112,7 +112,8 @@ $( document ).ready(function() {
       user++;
       hero[user].hp += (hero[user - 1].hp - hero[user - 1].max_hp);
       hero[user].max_hp += (hero[user - 1].hp - hero[user - 1].max_hp);
-      hero[user].armor += hero[user - 1].armor;
+      hero[user].armor = hero[user - 1].armor;
+      console.log(hero[user].armor + " user armor | " + hero[user - 1].armor + " user - 1 armor |")
       hero[user].energy = hero[user - 1].energy;
       hero[user].energy_left = hero[user - 1].energy_left;
       msg.append($('<li>').text(hero[user - 1].name + " has evolved into " + hero[user].name));
@@ -125,6 +126,7 @@ $( document ).ready(function() {
       user2++;
       hero[user2].hp += (hero[user2 - 1].hp - hero[user2 - 1].max_hp);
       hero[user2].max_hp += (hero[user2 - 1].hp - hero[user2 - 1].max_hp);
+      hero[user2].armor = hero[user2 - 1].armor;
       hero[user2].energy = hero[user2 - 1].energy;
       hero[user2].energy_left = hero[user2 - 1].energy_left;
       msg.append($('<li>').text(hero[user2 - 1].name + " has evolved into " + hero[user2].name));
@@ -266,6 +268,7 @@ $( document ).ready(function() {
           if (user == 2 || user == 3) // Pepe's 'Feels Bad Man' / Final Form Pepe's 'You Fool'
             extraDmgTurn();
           damage = ((hero[user].m1_dmg + extraDmg - hero[user2].armor) < 0) ? 0 : (hero[user].m1_dmg + extraDmg - hero[user2].armor);
+          console.log(hero[user].m1_dmg + " dmg |" + extraDmg + " extradmg |" + hero[user2].armor + " armor |");
           console.log(damage + " user1 move1");
           msg.append($('<li>').text(hero[user2].name + " took " + damage + " damage"));
           hero[user2].hp -= damage;
@@ -515,7 +518,7 @@ $( document ).ready(function() {
       if (hero[user2].energy_left >= 2) {
         if (user2ItemsAttached == 0) {
           user2Item = randomG(0, itemCount);
-          //user2Item = 0;
+          user2Item = 1;
           console.log("user2 item = " + user2Item);
           msg.append($('<li>').text(hero[user2].name + " attached " + item[user2Item].name));
           scroll();
