@@ -10,7 +10,7 @@
     <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
     <title>Meme-Wars</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <!--<script src="socket.io/socket.io.js"></script>-->
     <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.0/howler.min.js"></script>
@@ -37,15 +37,18 @@
           <div class="menu-row" id="menu-move2"></div>
           <div class="menu-row" id="menu-item">
             <img src='img/extras/like.gif'/>
-            x2: Item Equip
+            <img src='img/extras/like.gif'/>
+            : Item Equip
           </div>
           <div class="menu-row" id="menu-1support">
             <img src='img/extras/like.gif'/>
-            x1: Support Summon
+            : Support Summon
           </div>
           <div class="menu-row" id="menu-3support">
             <img src='img/extras/like.gif'/>
-            x3: Support Summon
+            <img src='img/extras/like.gif'/>
+            <img src='img/extras/like.gif'/>
+            : Support Summon
           </div>
           <div class="menu-row" id="menu-end">End Turn</div>
         </div>
@@ -87,18 +90,23 @@
             </div>
           </div>
           <div class="likes">
-            <div class="hero-energy" id="hero-energy"><span>Likes:</span></div>
+            <div class="hero-energy" id="hero-energy"><span></span></div>
+            <div class="like-text" id="like-text"><span>Likes:</span></div>
           </div>
         </div>
         <div class="item card" id="item-card">
-          <div class="card-name" id="item-name"></div>
+          <div class="card-name" id="item-name">
+            Item Slot
+          </div>
           <div id="img-cont">
             <img class="item-img" id="item-img" src="img/extras/questionMark.png">
           </div>
           <div class="card-effect" id="item-effect"></div>
         </div>
         <div class="support card" id="support-card">
-          <div class="card-name" id="support-name"></div>
+          <div class="card-name" id="support-name">
+            Support Slot
+          </div>
           <div class="move-dmg" id="support-dmg"></div>
           <div id="img-cont">
             <img class="img" id="support-img" src="img/extras/questionMark.png">
@@ -110,14 +118,16 @@
           </div>
         </div>
         <div class="support card" id="support2-card">
-          <div class="card-name" id="support2-name"></div>
+          <div class="card-name" id="support2-name">
+            Support Slot 2
+          </div>
           <div class="move-dmg" id="support2-dmg"></div>
           <div id="img-cont">
             <img class="img" id="support2-img" src="img/extras/questionMark.png">
           </div>
           <div class="card-effect" id="support2-effect"></div>
           <div class="card-shield">
-            <img src='Users/adrianpardo/Documents/cs50xmiami/MemeWars/img/extras/blooddrop.png'>
+            <img src='img/extras/blooddrop.png'>
             <div class="support-hp"id="support2-hp"></div>
           </div>
         </div>
@@ -145,7 +155,8 @@
           <div class="menu-row" id="menu2-end">End Turn</div>
         </div>
         <div class="likes">
-          <div class="hero-energy" id="hero-energy2"><span>Likes:</span></div>
+          <div class="like-text" id="like-text2">Likes:</div>
+          <div class="hero-energy" id="hero-energy2"><span>(1/1)</span></div>
         </div>
         <div id="card-cont">
 
@@ -180,14 +191,18 @@
           </div>
         </div>
         <div class="item card" id="item-card2">
-          <div class="card-name" id="item-name2"></div>
+          <div class="card-name" id="item-name2">
+            Item Slot
+          </div>
           <div id="img-cont">
             <img class="item-img" id="item-img2" src="img/extras/questionMark.png">
           </div>
           <div class="card-effect" id="item-effect2"></div>
         </div>
         <div class="support card" id="support-card2">
-          <div class="card-name" id="support-name2"></div>
+          <div class="card-name" id="support-name2">
+            Support Slot
+          </div>
           <div class="move-dmg" id="support-dmg2"></div>
           <div id="img-cont">
             <img class="img" id="support-img2" src="img/extras/questionMark.png">
@@ -199,7 +214,9 @@
           </div>
         </div>
         <div class="support card" id="support2-card2">
-          <div class="card-name" id="support2-name2"></div>
+          <div class="card-name" id="support2-name2">
+            Support Slot 2
+          </div>
           <div class="move-dmg" id="support2-dmg2"></div>
           <div id="img-cont">
             <img class="img" id="support2-img2" src="img/extras/questionMark.png">
