@@ -117,30 +117,40 @@ $( document ).ready(function() {
       }
   }
   function datBoi() {
-    if (userTurn) {
-      if (coinFlip()) {
-        hero[user].m2_dmg += 10;
-        $('#move2-dmg').text(hero[user].m2_dmg);
-        msg.append($('<li>').text("Coin flip result: Heads"));
-        msg.append($('<li>').text(hero[user].m2 + " now does " + hero[user].m2_dmg + " damage"));
-      }
-      else {
-        msg.append($('<li>').text("Coin flip result: Tails"));
-      }
+    tempUserCheck();
+    if (coinFlip()) {
+      hero[tempUser].m2_dmg += 10;
+      $('#move2-dmg' + idNum).text(hero[tempUser].m2_dmg);
+      msg.append($('<li>').text("Coin flip result: Heads"));
+      msg.append($('<li>').text(hero[tempUser].m2 + " now does " + hero[tempUser].m2_dmg + " damage"));
     }
     else {
-      if (coinFlip()) {
-        hero[user2].m2_dmg += 10;
-        $('#move2-dmg2').text(hero[user2].m2_dmg);
-        msg.append($('<li>').text("Coin flip result: Heads"));
-        msg.append($('<li>').text(hero[user2].m2 + " now does " + hero[user2].m2_dmg + " damage"));
-      }
-      else {
-        msg.append($('<li>').text("Coin flip result: Tails"));
-      }
+      msg.append($('<li>').text("Coin flip result: Tails"));
     }
   }
   function evolve() {
+    if (userTurn)
+      user++;
+    else
+      user2++;
+    tempUserCheck();
+    hero[tempUser].hp += (hero[tempUser - 1].hp - hero[tempUser - 1].max_hp);
+    hero[tempUser].max_hp += (hero[tempUser - 1].hp - hero[tempUser - 1].max_hp);
+    hero[tempUser].armor = hero[tempUser - 1].armor;
+    console.log(hero[tempUser].armor + " user armor | " + hero[tempUser - 1].armor + " user - 1 armor |")
+    hero[tempUser].energy = hero[tempUser - 1].energy;
+    hero[tempUser].energy_left = hero[tempUser - 1].energy_left;
+    msg.append($('<li>').text(hero[tempUser - 1].name + " has evolved into " + hero[tempUser].name));
+    if (userTurn)
+      userCardPrint();
+    else
+      user2CardPrint();
+    //console.log("evolve steam sale argument = " + $('#support-name').text() == "Steam Sale" || $('#support2-name').text() == "Steam Sale" );
+    if ($('#support-name' + idNum).text() == "Steam Sale" || $('#support2-name' + idNum).text() == "Steam Sale" ) // to do
+      supports3(1);
+    }
+
+    /*
     if (userTurn) {
       user++;
       hero[user].hp += (hero[user - 1].hp - hero[user - 1].max_hp);
@@ -166,29 +176,31 @@ $( document ).ready(function() {
       user2CardPrint();
       if ($('#support-name2').text() == "Steam Sale" || $('#support2-name2').text() == "Steam Sale" ) // to do
         supports3(1);
-    }
-  }
+    }*/
   function items() {
     tempUserCheck();
     switch (tempItem) {
-      case 0:
+      case 0: // dealWithIt
         hero[tempUser].hp += (hero[tempUser].max_hp - hero[tempUser].hp >= 20) ? 20 : hero[tempUser].max_hp - hero[tempUser].hp;
         $('#hero-hp' + idNum).text(hero[tempUser].hp);
         if (hero[tempUser].energy < 6) {
           hero[tempUser].energy++;
           hero[tempUser].energy_left++;
           $('#hero-energy' + idNum).append(like);
+          energyText();
         }
         break;
-      case 1:
+      case 1: // scumbagSteveHat
         hero[tempUser].armor += 10;
         console.log(hero[tempUser].armor);
         if (hero[tempOpp].energy > 0) {
           hero[tempOpp].energy--;
+          hero[tempOpp].energy_left--;
           $('#hero-energy' + idOppNum + ' img:last-child').remove()
+          energyText();
         }
         break;
-      case 2:
+      case 2: // Nokia
         hero[tempUser].armor += 20;
         break;
     }
@@ -387,8 +399,8 @@ $( document ).ready(function() {
         else if (userSuppsSummoned == 1){
           do {
             userSupp2 = randomG(0, supportCount);
-            //console.log(support[userSupp].name + " =supp |" + support[userSupp2].name + " = supp2 " + (support[userSupp].name == support[userSupp2].name));
-          } while (support[userSupp].name == support[userSupp2].name);
+            console.log("userSupp2 = " + userSupp2);
+          } while ($('#support-name').text() == support[userSupp2].name);
           msg.append($('<li>').text(hero[user].name + " summoned " + support[userSupp2].name));
           scroll();
           $('#support2-name').text(support[userSupp2].name);
@@ -433,7 +445,7 @@ $( document ).ready(function() {
         else if (userSuppsSummoned == 1) {
           do {
             userSupp2 = randomG(0, support3Count);
-          } while (support[userSupp].name == support[userSupp2].name);
+          } while ($('#support-name').text() == support3[userSupp2].name);
           msg.append($('<li>').text(hero[user].name + " summoned " + support3[userSupp2].name));
           scroll();
           $('#support2-name').text(support3[userSupp2].name);
@@ -582,7 +594,7 @@ $( document ).ready(function() {
         else if (user2SuppsSummoned == 1){
           do {
             user2Supp2 = randomG(0, supportCount);
-          } while (support[user2Supp].name == support[user2Supp2].name);
+          } while ($('#support-name2').text() == support[user2Supp2].name);
           msg.append($('<li>').text(hero[user2].name + " summoned " + support[user2Supp2].name));
           scroll();
           $('#support2-name2').text(support[user2Supp2].name);
@@ -627,7 +639,7 @@ $( document ).ready(function() {
         else if (user2SuppsSummoned == 1){
           do {
             user2Supp2 = randomG(0, support3Count);
-          } while (support[user2Supp].name == support3[user2Supp2].name);
+          } while ($('#support-name2').text() == support3[user2Supp2].name);
           msg.append($('<li>').text(hero[user2].name + " summoned " + support3[user2Supp2].name));
           scroll();
           $('#support2-name2').text(support3[user2Supp2].name);

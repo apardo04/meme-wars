@@ -1,12 +1,12 @@
 var like = "<img id='like' src='img/extras/like.gif'/>";
 var user = 0;
-var user2 = 6;
+var user2 = 2;
 var hero = [];
 var item = [];
 var support = [];
 var support3 = [];
 
-// -------- Hero JS -------- // 
+// -------- Hero JS -------- //
 var spongegar = {name: 'SpongeGar', hp: 160, max_hp: 170, armor: 0, img: 'img/Heroes/spongegar.png', m1: 'React', m1_energy: 3, m1_dmg: 20, m1_effect: 'Flip a coin. If heads, +10 armor.', m2: 'Savage', m2_energy: 5, m2_dmg: 50, m2_effect: '', energy: 0, energy_left: 0};
 var datboi = {name: 'Dat Boi', hp: 160, max_hp: 160, armor: 0, img: 'img/Heroes/datboi.png', m1: 'Ohh Shit', m1_energy: 3, m1_dmg: 30, m1_effect: 'Flip a coin. If heads, Waddup does +10 more damage(stacks)', m2: 'Waddup', m2_energy: 5, m2_dmg: 60, m2_effect: '', energy: 0, energy_left: 0};
 var pepe = {name: 'Pepe', hp: 120, max_hp: 120, armor: 0, img: 'img/Heroes/pepe.png', m1: 'Feels Bad Man', m1_energy: 1, m1_dmg: 30, m1_effect: 'Flip a coin. If tails, this attack does nothing.', m2: 'Evolve: Final Form Pepe', m2_energy: 4, m2_dmg: 40, m2_effect: '', energy: 0, energy_left: 0};
@@ -17,6 +17,7 @@ var chuckNorris = {name: 'Chuck Norris', hp: 170, max_hp: 170, armor: 0, img: 'i
 hero[0] = spongegar; hero[1] = datboi; hero[2] = pepe; hero[3] = finalFormPepe;
 hero[4] = doge; hero[5] = harambe; hero[6] = chuckNorris;
 function userCardPrint() {
+  $('#move1-cost img').remove();
   $('#move2-cost img').remove();
   $('#hero-name').text(hero[user].name);
   $('#hero-hp').text(hero[user].hp);
@@ -40,6 +41,7 @@ function userCardPrint() {
 
 // User2 Hero JS
 function user2CardPrint() {
+  $('#move1-cost2 img').remove();
   $('#move2-cost2 img').remove();
   $('#hero-name2').text(hero[user2].name);
   $('#hero-hp2').text(hero[user2].hp);
