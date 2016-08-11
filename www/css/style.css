@@ -263,10 +263,16 @@ div#hero-energy2 {
   left: 252px;
   top: -28px;
 }
+/* temp ipad fix 
 div#likes2 {
   left: -25vw;
   position: absolute;
   bottom: 34.5vw;
+}*/
+div#likes2 {
+    left: -18vw;
+    position: absolute;
+    bottom: 22.5vw;
 }
 
 /* Item Card CSS */
