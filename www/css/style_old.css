@@ -1,6 +1,5 @@
 body {
     background: #3f444a;
-    margin: 5px;
     /*background-image: url("http://jojud265nia2bj9sy4ah9b61.wpengine.netdna-cdn.com/wp-content/uploads/2015/07/The-Sound-of-Music-1600x900-c-default.jpg");
       background-size: cover;
     */
@@ -20,22 +19,18 @@ form button { width: 18%; background: rgb(255, 215, 70); border: none; padding: 
   background-image: url("http://cdn0.dailydot.com/cache/e1/9a/e19a26d81898cfa008821ec8c5cb3c10.jpg");
   background-size: stretch;
 }
-div#content {
-    width: 100vw;
-    height: 100vh;
-}
 #messages {
-  margin-left: 5px;
-  width: 17vw;
-  height: 33vh;
-  background: white;
-  padding-left: 0px;
-  list-style-position: inside;
-  overflow: hidden;
-  overflow-y: auto;
-  border: 4px #8c7b39 solid;
-  position: relative;
-  float: left;
+    margin-left: 7px;
+    width: 217px;
+    top: 237px;
+    height: 256px;
+    position: fixed;
+    background: white;
+    padding-left: 0px;
+    list-style-position: inside;
+    overflow: hidden;
+    overflow-y: auto;
+    border: 5px #8c7b39 solid;
 }
 #messages li {
     padding: 4px 6px;
@@ -44,35 +39,28 @@ div#content {
   background: #eee;
 }
 /* User Menu CSS */
-div#left-side {
-    float: left;
-    height: 100vh;
-    width: 20vw;
-    /*width: 18%;*/
-}
 div.turn-menu {
-    width: 18vw;
-    padding: 4px;
+    width: 227px;
+    padding: 7px;
     border-radius: 5px;
     font-family: arial;
     float: left;
     margin-right: 10px;
-    height: 29vh;
 }
 div#turn-menu2 {
-    float: left;
+    bottom: -91px;
+    position: relative;
 }
 .menu-row {
     background: #ffd746;
     text-align: center;
     font-weight: bold;
-    width: 18vw;
+    width: 100%;
     margin: 0 auto;
     height: 27px;
     margin-bottom: 11px;
     line-height: 27px;
     cursor: pointer;
-    font-size: 1.8vh;
 }
 div.menu-row img {
     width: 8%;
@@ -88,29 +76,21 @@ div.menu-row img {
 div#card-cont {
     float: left;
 }
-div#card-cont2 {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-}
 div.card {
   border: 5px solid #ffd746;
-  width: 16vw;
-  padding: 1%;
+  width: 227px;
+  padding: 7px;
   border-radius: 5px;
   background: #ecd9bf;
   font-family: arial;
   /*display: table;*/
   float:left;
-  margin-right: 0.6vw;
+  margin-right: 10px;
 }
 div.hero-name {
   float: left;
   font-weight: bold;
   font-size: 19px;
-}
-.hero.card {
-  padding: 4%;
 }
 /*div.shield {
     position: relative;
@@ -147,7 +127,7 @@ div.card-hp {
   font-size: 11px;
 }
 div.move{
-  width: 16vw;
+  width: 100%;
   padding-top: 7px;
 }
 div.move-name {
@@ -157,7 +137,7 @@ div.move-name {
     font-size: 14.7px;
 }
 div.move-cost {
-    /*width: 116px;*/
+    width: 116px;
     padding-left: 3px;
     float: left;
 }
@@ -166,8 +146,8 @@ div.move2b-cost {
     float: left;
 }
 div.move-cost img {
-    max-width: 17px;
-    padding-left: 4px;
+    max-width: 18px;
+    padding-left: 5px;
 }
 div.move2b-cost img {
     max-width: 19px;
@@ -179,31 +159,23 @@ div.move-dmg {
   margin-top: 3px;
 }
 div.move-effect {
-  width: 16vw;
+  width: 190px;
   display: table;
   font-size: 12px;
   padding-left: 10px;
 }
-.battle-col {
-    height: 100vh;
-    width: 80vw;
-    float: left;
-}
 div#top-row {
+    position: fixed;
     top: 4px;
-    width: 80vw;
-    height: 47vh
+    width: 100%;
+    height: 42%;
 }
 div#bottom-row {
+    position: fixed;
     bottom: 6px;
-    width: 80vw;
-    height: 52vh;
-    position: relative;
+    width: 100%;
+    height: 42%;
 }
-div#card2 {
-    bottom: 0;
-    left: 0;
-  }
 div#hero-image-cont {
   width: 100%;
   margin-top: 5px;
@@ -233,7 +205,7 @@ div#move2b-cost {
 div.likes {
     color: #fcfdfe;
     font-size: 19px;
-    width: 19vw;
+    width: 246px;
     text-shadow: 0px 5px 10px #000;
 }
 .likeUsed {
@@ -242,31 +214,25 @@ div.likes {
 div.hero-energy {
     float: left;
     float: left;
-    width: 19vw;
+    width: 100%;
 }
 div.hero-energy img {
     max-width: 22px;
-    padding-left: 7px;
+    padding-left: 10px;
     margin-top: 0px;
-    width: 1.8vw;
 }
 div.hero-energy span {
-  font-family: sans-serif;
+    font-family: sans-serif;
 }
 div#like-text2 {
-  position: absolute;
-  left: 252px;
-  top: -50px;
+    position: absolute;
+    left: 252px;
+    top: -50px;
 }
 div#hero-energy2 {
-  position: absolute;
-  left: 252px;
-  top: -28px;
-}
-div#likes2 {
-  left: -25vw;
-  position: absolute;
-  bottom: 34.5vw;
+    position: absolute;
+    left: 252px;
+    top: -28px;
 }
 
 /* Item Card CSS */
@@ -285,11 +251,6 @@ div.card-effect {
     text-align: center;
     padding-top: 6px;
     font-family: comic sans-serif;
-}
-div#item-card2 {
-    position: absolute;
-    left: 20vw;
-    bottom: 0;
 }
 
 /* Support CSS */
@@ -320,14 +281,4 @@ div.support-hp {
 }
 .card-shield {
     position: relative;
-}
-div#support-card2 {
-    left: 40vw;
-    bottom: 0;
-    position: absolute;
-}
-div#support2-card2 {
-  left: 60vw;
-  bottom: 0;
-  position: absolute;
 }

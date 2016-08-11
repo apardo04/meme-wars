@@ -1,6 +1,6 @@
 var like = "<img id='like' src='img/extras/like.gif'/>";
-var user = 0;
-var user2 = 2;
+var user = 5;
+var user2 = 3;
 var hero = [];
 var item = [];
 var support = [];
@@ -11,11 +11,12 @@ var spongegar = {name: 'SpongeGar', hp: 160, max_hp: 170, armor: 0, img: 'img/He
 var datboi = {name: 'Dat Boi', hp: 160, max_hp: 160, armor: 0, img: 'img/Heroes/datboi.png', m1: 'Ohh Shit', m1_energy: 3, m1_dmg: 30, m1_effect: 'Flip a coin. If heads, Waddup does +10 more damage(stacks)', m2: 'Waddup', m2_energy: 5, m2_dmg: 60, m2_effect: '', energy: 0, energy_left: 0};
 var pepe = {name: 'Pepe', hp: 120, max_hp: 120, armor: 0, img: 'img/Heroes/pepe.png', m1: 'Feels Bad Man', m1_energy: 1, m1_dmg: 30, m1_effect: 'Flip a coin. If tails, this attack does nothing.', m2: 'Evolve: Final Form Pepe', m2_energy: 4, m2_dmg: 40, m2_effect: '', energy: 0, energy_left: 0};
 var finalFormPepe = {name: 'Final Form Pepe', hp: 180, max_hp: 180, armor: 0, img: 'img/Heroes/finalFormPepe.png', m1: 'You Fool', m1_energy: 2, m1_dmg: 40, m1_effect: 'Flip a coin. If tails, this attack does nothing.', m2: 'True Power', m2_energy: 6, m2_dmg: 60, m2_effect: '', energy: 0, energy_left: 0};
-var doge = {name: "Doge", hp: 150, max_hp: 150, armor: 0, img: 'img/Heroes/doge.png', m1: 'Such Attack', m1_energy: 2, m1_dmg: 30, m1_effect: '', m2: 'So Wow', m2_energy: 4, m2_dmg: 60, m2_effect: 'If "Such Attack" was used last turn<br>"So Wow" does +20 dmg this turn.', energy: 0, energy_left: 0};
-var harambe = {name: 'Harambe', hp: 200, max_hp: 200, armor: 0, img: 'img/Heroes/harambe2.jpg', m1: 'Drag', m1_energy: 2, m1_dmg: 20, m1_effect: '', m2: 'Dicks out for Harambe', m2_energy: 4, m2_dmg: 50, m2_effect: '', energy: 0, energy_left: 0};
+var doge = {name: "Doge", hp: 150, max_hp: 150, armor: 0, img: 'img/Heroes/doge.png', m1: 'Such Attack', m1_energy: 2, m1_dmg: 30, m1_effect: '', m2: 'So Wow', m2_energy: 5, m2_dmg: 60, m2_effect: 'If "Such Attack" was used last turn<br>"So Wow" does +20 dmg this turn.', energy: 0, energy_left: 0};
+var slenderman = {name: 'Slenderman', hp: 160, max_hp: 160, armor: 0, img: 'img/Heroes/slenderman.jpg', m1: 'Static', m1_energy: 1, m1_dmg: 0, m1_effect: 'Mutilation will now do +20 damage', m2: 'Mutilation', m2_energy: 6, m2_dmg: 0, m2_effect: "This attack reset's to 0 damage.", energy: 0, energy_left: 0};
+var harambe = {name: 'Harambe', hp: 200, max_hp: 200, armor: 0, img: 'img/Heroes/harambe2.jpg', m1: 'Drag', m1_energy: 2, m1_dmg: 20, m1_effect: '', m2: 'Dicks Out', m2_energy: 4, m2_dmg: 50, m2_effect: '', energy: 0, energy_left: 0};
 var chuckNorris = {name: 'Chuck Norris', hp: 170, max_hp: 170, armor: 0, img: 'img/Heroes/chuckNorris.png', m1: 'Roundhouse', m1_energy: 3, m1_dmg: 30, m1_effect: '', m2: 'Beard Deflect', m2_energy: 5, m2_dmg: 50, m2_effect: 'Flip a coin. If heads, Chuck Norris deflects 20 damage next turn.', energy: 0, energy_left: 0};
 hero[0] = spongegar; hero[1] = datboi; hero[2] = pepe; hero[3] = finalFormPepe;
-hero[4] = doge; hero[5] = harambe; hero[6] = chuckNorris;
+hero[4] = doge; hero[5] = slenderman; hero[6] = harambe; hero[7] = chuckNorris;
 function userCardPrint() {
   $('#move1-cost img').remove();
   $('#move2-cost img').remove();
@@ -72,9 +73,10 @@ item[0] = dealWithIt; item[1] = scumBagSteveHat; item[2] = nokia; item[3] = hors
 var itemCount = item.length - 1;
 
 // -------- 1 Like Support JS -------- //
-var meGusta = {name: 'Me Gusta', hp: 40, img: 'img/supports/megusta.png', effect: '+10 HP<br>While Active:<br>+10 Damage'};
-var foreverAlone = {name: 'Forever Alone', hp: 20,img: 'img/supports/foreverAlone.png', effect: 'If this is your only support:<br>+ 20 damage'};
-support[0] = meGusta; support[1] = foreverAlone;
+var meGusta = {name: 'Me Gusta', img: 'img/supports/megusta.png', effect: '+10 HP<br>While Active:<br>+10 Damage'};
+var foreverAlone = {name: 'Forever Alone', img: 'img/supports/foreverAlone.png', effect: 'If this is your only support:<br>+ 20 damage'};
+var iFeelIt = {name: "I Feel It", img: 'img/supports/iFeelIt.png', effect: 'Opponent takes 30 damage.<br>You take 10 damage.'}
+support[0] = meGusta; support[1] = foreverAlone; support[2] = iFeelIt;
 var supportCount = support.length -1;
 
 // -------- 3 Like Support JS -------- //
