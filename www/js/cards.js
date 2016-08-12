@@ -1,6 +1,6 @@
 var like = "<img id='like' src='img/extras/like.gif'/>";
 var user = 5;
-var user2 = 0;
+var user2 = 7;
 var hero = [];
 var item = [];
 var basicSupp = [];
