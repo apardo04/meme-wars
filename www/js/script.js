@@ -236,7 +236,7 @@ $('#resetCountdown').on('click', function () {
     msg.append($('<li>').text(hero[tempUser].name + " took 10 damage out of confusion."));
     $('#hero-hp' + idNum).text(hero[tempUser].hp);
   }
-  function basicCardPrint(tempSupp, slot2) {
+  function basicSuppPrint(tempSupp, slot2) {
     tempUserCheck();
     var slot = (slot2) ? "2" : ""; // if true, replacing slot 2
     $('#support' + slot + '-name' + idNum).text(basicSupp[tempSupp].name);
@@ -246,9 +246,11 @@ $('#resetCountdown').on('click', function () {
     hero[tempUser].energy_left--;
     energyText(1, true);
     if (tempSupp == 0)
-      supportsEffect(0, true); // Me Gusta, Summoned
+      BasicSuppEffect(0, true); // Me Gusta, Summoned
+    if (tempSupp == 2)
+      BasicSuppEffect(2); // I Feel It
   }
-  function epicCardPrint(tempSupp, slot2) {
+  function epicSuppPrint(tempSupp, slot2) {
     tempUserCheck();
     var slot = (slot2) ? "2" : ""; // if true, replacing slot 2
     $('#support' + slot + '-name' + idNum).text(epicSupp[tempSupp].name);
@@ -273,7 +275,7 @@ $('#resetCountdown').on('click', function () {
     $("#support-card" + idNum).click(function() {
       msg.append($('<li>').text(hero[tempUser].name + " replaced " + $("#support-name" + idNum).text() + " with " + basicSupp[tempSupp].name));
       scroll();
-      basicCardPrint(tempSupp);
+      basicSuppPrint(tempSupp);
       if (userTurn)
         userSupp = tempSupp;
       else
@@ -284,7 +286,7 @@ $('#resetCountdown').on('click', function () {
     $("#support2-card" + idNum).click(function() {
       msg.append($('<li>').text(hero[tempUser].name + " replaced " + $("#support2-name" + idNum).text() + " with " + basicSupp[tempSupp].name));
       scroll();
-      basicCardPrint(tempSupp, true);
+      basicSuppPrint(tempSupp, true);
       if (userTurn)
         userSupp2 = tempSupp;
       else
@@ -294,10 +296,10 @@ $('#resetCountdown').on('click', function () {
     });
     return;
   }
-  function supportsEffect(supp, summoned) {
+  function BasicSuppEffect(supp, summoned) {
     tempUserCheck();
     switch (supp) {
-      case 0: // meGusta
+      case 0: // Me Gusta
         if (summoned) {
           hero[tempUser].hp += 10;
           hero[tempUser].max_hp += 10;
@@ -308,10 +310,16 @@ $('#resetCountdown').on('click', function () {
           extraDmg += 10;
         }
         break;
-      case 1: // foreverAlone
-        console.log("supportsEffect(1) triggered")
+      case 1: // Forever Alone
         extraDmg += 20;
         break;
+      case 2: // I Feel It
+        hero[tempOpp].hp -= 30;
+        $('#hero-hp' + idOppNum).text(hero[tempOpp].hp);
+        msg.append($('<li>').text(hero[tempOpp].name + " took 30 damage"));
+        hero[tempUser].hp -= 10;
+        $('#hero-hp' + idNum).text(hero[tempUser].hp);
+        msg.append($('<li>').text(hero[tempUser].name + " took 10 damage"));
     }
   }
   function EpicSuppEffect(supp) {
@@ -371,9 +379,9 @@ $('#resetCountdown').on('click', function () {
         if (hero[user].energy_left >= hero[user].m1_energy) {
           msg.append($('<li>').text(hero[user].name + " used " + hero[user].m1));
           if ((userSuppsSummoned > 0 && $('#support-name').text() == basicSupp[0].name) || (userSuppsSummoned == 2 && $('#support2-name').text() == basicSupp[0].name))
-            supportsEffect(0); // Me Gusta extraDmg
+            BasicSuppEffect(0); // Me Gusta extraDmg
           if (userSuppsSummoned == 1 && $('#support-name').text() == basicSupp[1].name)
-            supportsEffect(1); // Forever Alone extraDmg
+            BasicSuppEffect(1); // Forever Alone extraDmg
           if (user == 2 || user == 3) // Pepe's 'Feels Bad Man' / Final Form Pepe's 'You Fool'
             m1_effects(2);
           damage = ((hero[user].m1_dmg + extraDmg - hero[user2].armor) < 0) ? 0 : (hero[user].m1_dmg + extraDmg - hero[user2].armor);
@@ -411,9 +419,9 @@ $('#resetCountdown').on('click', function () {
         if (hero[user].energy_left >= hero[user].m2_energy) {
           msg.append($('<li>').text(hero[user].name + " used " + hero[user].m2));
           if ((userSuppsSummoned > 0 && $('#support-name').text() == basicSupp[0].name) || (userSuppsSummoned == 2 && $('#support2-name').text() == basicSupp[0].name))
-            supportsEffect(0);
+            BasicSuppEffect(0);
           if (userSuppsSummoned == 1 && $('#support-name').text() == basicSupp[1].name)
-            supportsEffect(1);
+            BasicSuppEffect(1);
           damage = ((hero[user].m2_dmg + extraDmg - hero[user2].armor) < 0) ? 0 : (hero[user].m2_dmg + extraDmg - hero[user2].armor);
           console.log(damage + " user1 move2");
           msg.append($('<li>').text(hero[user2].name + " took " + damage + " damage"));
@@ -473,7 +481,7 @@ $('#resetCountdown').on('click', function () {
           //userSupp = 1;
           msg.append($('<li>').text(hero[user].name + " summoned " + basicSupp[userSupp].name));
           scroll();
-          basicCardPrint(userSupp);
+          basicSuppPrint(userSupp);
           userSuppsSummoned++;
         }
         else if (userSuppsSummoned == 1){
@@ -483,7 +491,7 @@ $('#resetCountdown').on('click', function () {
           } while ($('#support-name').text() == basicSupp[userSupp2].name);
           msg.append($('<li>').text(hero[user].name + " summoned " + basicSupp[userSupp2].name));
           scroll();
-          basicCardPrint(userSupp2, true);
+          basicSuppPrint(userSupp2, true);
           userSuppsSummoned++;
         }
         else if (userSuppsSummoned == 2) {
@@ -503,7 +511,7 @@ $('#resetCountdown').on('click', function () {
           //userSupp = 1;
           msg.append($('<li>').text(hero[user].name + " summoned " + epicSupp[userSupp].name));
           scroll();
-          epicCardPrint(userSupp);
+          epicSuppPrint(userSupp);
           userSuppsSummoned++;
         }
         else if (userSuppsSummoned == 1) {
@@ -512,7 +520,7 @@ $('#resetCountdown').on('click', function () {
           } while ($('#support-name').text() == epicSupp[userSupp2].name);
           msg.append($('<li>').text(hero[user].name + " summoned " + epicSupp[userSupp2].name));
           scroll();
-          epicCardPrint(userSupp2, true);
+          epicSuppPrint(userSupp2, true);
           userSuppsSummoned++;
         }
         else {
@@ -536,9 +544,9 @@ $('#resetCountdown').on('click', function () {
         if (hero[user2].energy_left >= hero[user2].m1_energy) {
           msg.append($('<li>').text(hero[user2].name + " used " + hero[user2].m1));
           if ((user2SuppsSummoned > 0 && $('#support-name2').text() == basicSupp[0].name) || (user2SuppsSummoned == 2 && $('#support2-name2').text() == basicSupp[0].name))
-            supportsEffect(0);
+            BasicSuppEffect(0);
           if (user2SuppsSummoned == 1 && $('#support-name2').text() == basicSupp[1].name)
-            supportsEffect(1);
+            BasicSuppEffect(1);
           if (user2 == 2 || user2 == 3) // Pepe's 'Feels Bad Man' / Final Form Pepe's 'You Fool'
             m1_effects(2);
           damage = ((hero[user2].m1_dmg + extraDmg - hero[user].armor) < 0) ? 0 : (hero[user2].m1_dmg + extraDmg - hero[user].armor);
@@ -576,10 +584,10 @@ $('#resetCountdown').on('click', function () {
           msg.append($('<li>').text(hero[user2].name + " used " + hero[user2].m2));
           if ((user2SuppsSummoned > 0 && $('#support-name2').text() == basicSupp[0].name) || (user2SuppsSummoned == 2 && $('#support2-name2').text() == basicSupp[0].name)){
             console.log("user2 megusta triggered");
-            supportsEffect(0);}
+            BasicSuppEffect(0);}
           if (user2SuppsSummoned == 1 && $('#support-name2').text() == basicSupp[1].name) {
             console.log("forever alone user2 triggered");
-            supportsEffect(1);
+            BasicSuppEffect(1);
           }
           damage = ((hero[user2].m2_dmg + extraDmg - hero[user].armor) < 0) ? 0 : (hero[user2].m2_dmg + extraDmg - hero[user].armor);
           console.log(damage + " user2 move2");
@@ -640,7 +648,7 @@ $('#resetCountdown').on('click', function () {
           user2Supp = randomG(0, basicSuppCount);
           msg.append($('<li>').text(hero[user2].name + " summoned " + basicSupp[user2Supp].name));
           scroll();
-          basicCardPrint(user2Supp);
+          basicSuppPrint(user2Supp);
           user2SuppsSummoned++;
         }
         else if (user2SuppsSummoned == 1){
@@ -649,7 +657,7 @@ $('#resetCountdown').on('click', function () {
           } while ($('#support-name2').text() == basicSupp[user2Supp2].name);
           msg.append($('<li>').text(hero[user2].name + " summoned " + basicSupp[user2Supp2].name));
           scroll();
-          basicCardPrint(user2Supp2, true);
+          basicSuppPrint(user2Supp2, true);
           user2SuppsSummoned++;
         }
         else if (user2SuppsSummoned == 2) {
@@ -669,7 +677,7 @@ $('#resetCountdown').on('click', function () {
           //user2Supp = 1;
           msg.append($('<li>').text(hero[user2].name + " summoned " + epicSupp[user2Supp].name));
           scroll();
-          epicCardPrint(user2Supp);
+          epicSuppPrint(user2Supp);
           user2SuppsSummoned++;
         }
         else if (user2SuppsSummoned == 1){
@@ -678,7 +686,7 @@ $('#resetCountdown').on('click', function () {
           } while ($('#support-name2').text() == epicSupp[user2Supp2].name);
           msg.append($('<li>').text(hero[user2].name + " summoned " + epicSupp[user2Supp2].name));
           scroll();
-          epicCardPrint(user2Supp2, true);
+          epicSuppPrint(user2Supp2, true);
           user2SuppsSummoned++;
         }
         else {

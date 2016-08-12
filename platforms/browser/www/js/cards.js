@@ -1,6 +1,6 @@
 var like = "<img id='like' src='img/extras/like.gif'/>";
-var user = 5;
-var user2 = 7;
+var user = 9;
+var user2 = 8;
 var hero = [];
 var item = [];
 var basicSupp = [];
@@ -15,8 +15,11 @@ var doge = {name: "Doge", hp: 150, max_hp: 150, armor: 0, img: 'img/Heroes/doge.
 var slenderman = {name: 'Slenderman', hp: 160, max_hp: 160, armor: 0, img: 'img/Heroes/slenderman.jpg', m1: 'Static', m1_energy: 1, m1_dmg: 0, m1_effect: 'Mutilation will now do +20 damage', m2: 'Mutilation', m2_energy: 6, m2_dmg: 0, m2_effect: "This attack reset's to 0 damage.", energy: 0, energy_left: 0};
 var harambe = {name: 'Harambe', hp: 200, max_hp: 200, armor: 0, img: 'img/Heroes/harambe2.jpg', m1: 'Drag', m1_energy: 2, m1_dmg: 20, m1_effect: '', m2: 'Dicks Out', m2_energy: 4, m2_dmg: 50, m2_effect: '', energy: 0, energy_left: 0};
 var chuckNorris = {name: 'Chuck Norris', hp: 170, max_hp: 170, armor: 0, img: 'img/Heroes/chuckNorris.png', m1: 'Roundhouse', m1_energy: 3, m1_dmg: 30, m1_effect: '', m2: 'Beard Deflect', m2_energy: 5, m2_dmg: 50, m2_effect: 'Flip a coin. If heads, Chuck Norris deflects 20 damage next turn.', energy: 0, energy_left: 0};
+var nyanCat = {name: 'Nyan Cat', hp: 130, max_hp: 130, armor: 0, img: 'img/Heroes/nyanCat.png', m1: 'NYANYANYAN', m1_energy: 2, m1_dmg: 0, m1_effect: 'Heal 20 HP', m2: 'Rainbow Blast', m2_energy: 5, m2_dmg: 60, m2_effect: '', energy: 0, energy_left: 0};
+var vapeNation = {name: 'Vape Nation', hp: 150, max_hp: 150, armor: 0, img: 'img/Heroes/vapeNation.png', m1:'Vape Screen', m1_energy: 2, m1_dmg: 10, m1_effect: '', m2: 'Fattest Rip', m2_energy: 5, m2_dmg: 50, m2_effect: '', energy: 0, energy_left: 0};
 hero[0] = spongegar; hero[1] = datboi; hero[2] = pepe; hero[3] = finalFormPepe;
 hero[4] = doge; hero[5] = slenderman; hero[6] = harambe; hero[7] = chuckNorris;
+hero[8] = nyanCat; hero[9] = vapeNation;
 function userCardPrint() {
   $('#move1-cost img').remove();
   $('#move2-cost img').remove();
