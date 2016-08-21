@@ -10,7 +10,7 @@
     <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
     <title>Meme-Wars</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    <!--<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">-->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <!--<script src="socket.io/socket.io.js"></script>-->
     <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.0/howler.min.js"></script>
@@ -82,17 +82,13 @@
         <div id="top-row">
           <div id="card-cont">
             <div class="hero card">
-              <div class="hero-name" id="hero-name"></div>
-              <div class="shield">
-                <!--<img src='img/extras/shieldHp.png'>
-                <div class="card-armor" id="hero-armor">0</div>-->
-              </div>
-              <div class="shield">
-                <!--<img src='img/extras/shield.png'>-->
+              <div class="hero-row">
+                <div class="hero-name" id="hero-name"></div>
                 <div class="card-hp">
                   HP
                   <span class="hp" id="hero-hp"></span>
                 </div>
+                <div class="armor" id="hero-armor"></div>
               </div>
               <div id="img-cont">
                 <img class="img" id="hero-img" src="img/extras/questionMark.png">
@@ -119,7 +115,7 @@
             </div>
             <div class="likes">
               <div class="hero-energy" id="hero-energy"><span></span></div>
-              <div class="like-text" id="like-text"><span>Likes:</span></div>
+              <div class="armor-text" id="armor-text">Armor: <span>+0</span></div>
             </div>
           </div>
           <div class="item card" id="item-card">
@@ -166,14 +162,17 @@
         <div id="bottom-row">
           <div id="card-cont2">
             <div class="likes" id="likes2">
-              <div class="like-text" id="like-text2">Likes:</div>
+              <div class="armor-text" id="armor-text2">Armor: <span>+0</span></div>
               <div class="hero-energy" id="hero-energy2"><span>(1/1)</span></div>
             </div>
             <div class="hero card" id="card2">
-              <div class="hero-name" id="hero-name2"></div>
-              <div class="card-hp">
-                HP
-                <span class="hp" id="hero-hp2"></span>
+              <div class="hero-row">
+                <div class="hero-name" id="hero-name2"></div>
+                <div class="card-hp">
+                  HP
+                  <span class="hp" id="hero-hp2"></span>
+                </div>
+                <!--<div class="armor" id="hero-armor2"></div>-->
               </div>
               <div id="img-cont">
                 <img class="img" id="hero-img2" src="img/extras/questionMark.png">

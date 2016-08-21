@@ -38,20 +38,18 @@ $('#resetCountdown').on('click', function () {
   var userSupp2 = 0; // Slot 2 Support
   var userItemsAttached =  0; // How many items are attached
   var userSuppsSummoned = 0; // How many supports have been summoned
-  var userSuppDmg = 0;
   var user2Item = 0;
   var user2Supp = 0;
   var user2Supp2 = 0;
   var user2ItemsAttached =  0;
   var user2SuppsSummoned = 0;
-  var user2SuppDmg = 0;
   var userTurn; // true: user1's turn, false: user2
   var extraDmg = 0; // Exrta damage for current turn
   var damage = 0; // Damage being done this turn
   var energyUsedCounter = 0; // Energies used so far this turn.
   var attacked = false; // False: Hasn't attacked this turn
-  var tempUser; // Makes user variable dynamic
-  var idNum; // Makes id # dynamic
+  var tempUser; // Dynamic user variable depending on turn
+  var idNum; // Dynamic HTML id depending on turn
   var tempItem // Makes userItem dynamic
   var tempOpp;
   var idOppNum;
@@ -102,6 +100,8 @@ $('#resetCountdown').on('click', function () {
     extraDmg = 0;
     energyUsedCounter = 0;
     attacked = false;
+    if (hero[tempOpp].intimidate == true)
+      m1_effects(0, true);
     userTurn = !userTurn;
   }
   function turnCheck() {
@@ -135,19 +135,22 @@ $('#resetCountdown').on('click', function () {
       sound.play();
     }
   }
-  function m1_effects(num) {
+  function m1_effects(num, opp) {
     tempUserCheck();
     switch(num) {
-      case 0: // SpongeGar's 'React'
-        if (coinFlip()) {
-          hero[tempUser].armor += 10;
-          msg.append($('<li>').text("Coin flip result: Heads"));
-          msg.append($('<li>').text(hero[tempUser].name + " now has " + hero[tempUser].armor + " armor."));
-        }
-        else {
-          msg.append($('<li>').text("Coin flip result: Tails"));
-        }
-        break;
+      case 0: // SpongeGar's 'Intimidate'
+        if (!opp) {
+            hero[tempUser].intimidate = true;
+            hero[tempUser].armor += 10;
+            msg.append($('<li>').text(hero[tempUser].name + " will have +10 armor next turn."));
+            $('#armor-text' + idNum + ' span').text('+ ' + hero[tempUser].armor);
+          }
+          else {
+            hero[tempOpp].intimidate = false;
+            hero[tempOpp].armor -= 10;
+            $('#armor-text' + idOppNum + ' span').text('+ ' + hero[tempOpp].armor);
+          }
+          break;
       case 1: // Dat Boi's 'Ohh Shit'
         if (coinFlip()) {
           hero[tempUser].m2_dmg += 10;
@@ -168,9 +171,16 @@ $('#resetCountdown').on('click', function () {
           msg.append($('<li>').text("Coin flip result: Tails"));
         }
         break;
+      case 4: // Doge's 'Such Treat'
+        break;
       case 5: // Slenderman's 'Static'
         hero[tempUser].m2_dmg += 20;
         $('#move2-dmg' + idNum).text(hero[tempUser].m2_dmg);
+        break;
+      case 8: // Nyan Cat's 'NYANYANYAN'
+        hero[tempUser].hp += (hero[tempUser].max_hp - hero[tempUser].hp >= 20) ? 20 : hero[tempUser].max_hp - hero[tempUser].hp;
+        $('#hero-hp' + idNum).text(hero[tempUser].hp);
+        break;
     }
   }
   function m2_effects(num) {
@@ -189,8 +199,11 @@ $('#resetCountdown').on('click', function () {
     tempUserCheck();
     hero[tempUser].hp += (hero[tempUser - 1].hp - hero[tempUser - 1].max_hp);
     hero[tempUser].max_hp += (hero[tempUser - 1].hp - hero[tempUser - 1].max_hp);
-    hero[tempUser].armor = hero[tempUser - 1].armor;
-    console.log(hero[tempUser].armor + " user armor | " + hero[tempUser - 1].armor + " user - 1 armor |")
+    if (hero[tempUser - 1].armor > 0) {
+      hero[tempUser].armor = hero[tempUser - 1].armor;
+      $('#armor-text' + idNum + ' span').text('+' + hero[tempUser].armor);
+      console.log(hero[tempUser].armor + " user armor | " + hero[tempUser - 1].armor + " user - 1 armor |");
+    }
     hero[tempUser].energy = hero[tempUser - 1].energy;
     hero[tempUser].energy_left = hero[tempUser - 1].energy_left;
     msg.append($('<li>').text(hero[tempUser - 1].name + " has evolved into " + hero[tempUser].name));
@@ -217,6 +230,7 @@ $('#resetCountdown').on('click', function () {
         break;
       case 1: // scumbagSteveHat
         hero[tempUser].armor += 10;
+        $('#armor-text' + idNum + ' span').text('+ ' + hero[tempUser].armor);
         console.log(hero[tempUser].armor);
         if (hero[tempOpp].energy > 0) {
           hero[tempOpp].energy--;
@@ -227,6 +241,7 @@ $('#resetCountdown').on('click', function () {
         break;
       case 2: // Nokia
         hero[tempUser].armor += 20;
+        $('#armor-text' + idNum + ' span').text('+ ' + hero[tempUser].armor);
         break;
     }
   }
@@ -346,6 +361,9 @@ $('#resetCountdown').on('click', function () {
   }
 
   // ------- Local Play-------- ///
+  user = 4//randomG(0, 9);
+  user2 = randomG(0, 9);
+  console.log(user+"   "+user2)
   userCardPrint();
   user2CardPrint();
   msg.append($('<li>').text(hero[user].name + " is Heads."));
@@ -390,12 +408,16 @@ $('#resetCountdown').on('click', function () {
           msg.append($('<li>').text(hero[user2].name + " took " + damage + " damage"));
           hero[user2].hp -= damage;
           $('#hero-hp2').text(hero[user2].hp);
-          if (user == 0) // SpongeGar's 'React'
+          if (user == 0) // SpongeGar's 'Intimidate'
             m1_effects(0);
           else if (user == 1) // Dat Boi's 'Ohh Shit'
             m1_effects(1);
+          else if (user == 4) // Doge's 'Such Treat'
+            m1_effects(4);
           else if (user == 5) // Slenderman's 'Static'
             m1_effects(5);
+          else if (user == 8) // Nyan Cat's 'NYANYANYAN'
+            m1_effects(8);
           if (user2Item == 3) // Horse Head
             confusion();
           hero[user].energy_left -= hero[user].m1_energy;
@@ -554,12 +576,14 @@ $('#resetCountdown').on('click', function () {
           msg.append($('<li>').text(hero[user].name + " took " + damage + " damage"));
           hero[user].hp -= damage;
           $('#hero-hp').text(hero[user].hp);
-          if (user2 == 0) // SpongeGar's React
+          if (user2 == 0) // SpongeGar's 'Intimidate'
             m1_effects(0);
-          else if (user2 == 1) // Dat Boi's ohh shit
+          else if (user2 == 1) // Dat Boi's 'Ohh Shit'
             m1_effects(1);
           else if (user2 == 5) // Slenderman's 'Static'
             m1_effects(5);
+          else if (user2 == 8) // Nyan Cat's 'NYANYANYAN'
+            m1_effects(8);
           if (userItem == 3) // Horse Head
             confusion();
           hero[user2].energy_left -= hero[user2].m1_energy;

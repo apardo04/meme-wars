@@ -1,0 +1,12 @@
+when replacing a card, make everything else not clickable.
+
+user2 likes div position.
+
+spongegar +10 armor next turn
+
+harambe for every extra like paid +10 damage
+
+splice out a switched support or item with:
+basicSupp.splice(userSupp, 1);
+
+maybe make a basic slot and an epic slot. Only one of each. Easier programming?
