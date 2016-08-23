@@ -1,5 +1,4 @@
 $( document ).ready(function() {
-
 /*  var timer = new Tock({
       callback: function () {
           $('#clockface').val(timer.msToTime(timer.lap()));
@@ -31,14 +30,11 @@ $('#resetCountdown').on('click', function () {
     countdown.stop();
     $('#countdown_clock').val('00:10');
 });*/
-
-
-
-
+  var msg = $('#messages');
   // ------- Local Play-------- ///
   user = 4//randomG(0, 9);
   user2 = randomG(0, 9);
-  console.log(user+"   "+user2)
+  console.log(msg);
   userCardPrint();
   userTurn = true;
   userCardPrint();
