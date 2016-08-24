@@ -63,6 +63,7 @@ function randomG(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 function scroll() {
+  console.log("triggered");
   msg.animate({scrollTop: msg.prop("scrollHeight")}, 500);
 }
 function energyText(energyUsed, likeOpacity) {
