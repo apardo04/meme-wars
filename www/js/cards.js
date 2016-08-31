@@ -7,7 +7,7 @@ var basicSupp = [];
 var epicSupp = [];
 
 // -------- Hero JS -------- //
-var spongegar = {name: 'SpongeGar', hp: 160, max_hp: 170, armor: 0, img: 'img/Heroes/spongegar.png', m1: 'Intimidate', m1_energy: 3, m1_dmg: 20, m1_effect: 'Flip a coin. If heads, +10 armor.', m2: 'React', m2_energy: 5, m2_dmg: 50, m2_effect: '', energy: 0, energy_left: 0, intimidate: false};
+var spongegar = {name: 'SpongeGar', hp: 160, max_hp: 160, armor: 0, img: 'img/Heroes/spongegar.png', m1: 'Intimidate', m1_energy: 3, m1_dmg: 20, m1_effect: 'SpongeGar has +10 armor this turn.', m2: 'React', m2_energy: 5, m2_dmg: 50, m2_effect: '', energy: 0, energy_left: 0, intimidate: false};
 var datboi = {name: 'Dat Boi', hp: 160, max_hp: 160, armor: 0, img: 'img/Heroes/datboi.png', m1: 'Ohh Shit', m1_energy: 3, m1_dmg: 30, m1_effect: 'Flip a coin. If heads, Waddup does +10 more damage(stacks)', m2: 'Waddup', m2_energy: 5, m2_dmg: 60, m2_effect: '', energy: 0, energy_left: 0};
 var pepe = {name: 'Pepe', hp: 120, max_hp: 120, armor: 0, img: 'img/Heroes/pepe.png', m1: 'Feels Bad Man', m1_energy: 1, m1_dmg: 30, m1_effect: 'Flip a coin. If tails, this attack does nothing.', m2: 'Evolve: Final Form Pepe', m2_energy: 4, m2_dmg: 40, m2_effect: '', energy: 0, energy_left: 0};
 var finalFormPepe = {name: 'Final Form Pepe', hp: 180, max_hp: 180, armor: 0, img: 'img/Heroes/finalFormPepe.png', m1: 'You Fool', m1_energy: 2, m1_dmg: 40, m1_effect: 'Flip a coin. If tails, this attack does nothing.', m2: 'True Power', m2_energy: 6, m2_dmg: 60, m2_effect: '', energy: 0, energy_left: 0};
@@ -24,10 +24,15 @@ hero[8] = nyanCat; hero[9] = vapeNation;
 // -------- Item JS -------- //
 var dealWithIt = {name: 'Deal With It', img: 'img/Items/dealWithIt.png', effect: 'Heal +20 HP <br> +1 Like'};
 var scumBagSteveHat = {name: 'Scumbag Steve Hat', img: 'img/Items/ScumBagSteveHat.png', effect: 'Opponent loses 1 Like <br> Attached: +10 armor'};
-var nokia = {name: "Nokia Phone", img: 'img/Items/nokia.png', effect: '+20 Armor'}
+var nokia = {name: 'Nokia Phone', img: 'img/Items/nokia.png', effect: 'Attached: +20 Armor'}
 var horseHead = {name: "Horse Head", img: 'img/Items/horseMask.png', effect: "When your opponent attacks,<br> they take 10 damage <br> out of confusion."}
 item[0] = dealWithIt; item[1] = scumBagSteveHat; item[2] = nokia; item[3] = horseHead;
 var itemCount = item.length - 1;
+var itemsArr = {0:item.slice(0),
+                1:item.slice(0)
+               };
+//var userItemsArr = item.slice(0);
+//var user2ItemsArr = item.slice(0);
 
 // -------- Basic Support JS -------- //
 var meGusta = {name: 'Me Gusta', img: 'img/supports/megusta.png', effect: '+10 HP<br>While Active:<br>+10 Damage'};

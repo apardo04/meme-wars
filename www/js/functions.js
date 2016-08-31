@@ -14,6 +14,7 @@ var extraDmg = 0; // Exrta damage for current turn
 var damage = 0; // Damage being done this turn
 var energyUsedCounter = 0; // Energies used so far this turn.
 var attacked = false; // False: Hasn't attacked this turn
+var player; // Stores 0 for user1 turn, 1 for user2 turn
 var tempUser; // Dynamic user variable depending on turn
 var idNum; // Dynamic HTML id depending on turn
 var tempItem // Makes userItem dynamic
@@ -26,6 +27,7 @@ var itemEquipped = false;
 
 // ------- Local Play Functions-------- ///
 function tempUserCheck() {
+  player = (userTurn) ? 0 : 1;
   tempUser = (userTurn) ? user : user2;
   idNum = (userTurn) ? '' : '2';
   tempItem = (userTurn) ? userItem : user2Item;
@@ -63,8 +65,8 @@ function randomG(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 function scroll() {
-  console.log("triggered");
-  msg.animate({scrollTop: msg.prop("scrollHeight")}, 500);
+  //console.log("triggered");
+  $('#messages').animate({scrollTop: $('#messages').prop("scrollHeight")}, 500);
 }
 function energyText(energyUsed, likeOpacity) {
   tempUserCheck();
@@ -80,7 +82,7 @@ function endTurn() {
   $('div#turn-menu1').toggleClass( "disabled" );
   $('div#turn-menu2').toggleClass('disabled');
   $('div#hero-energy' + idNum + ' img').removeClass("likeUsed");
-  msg.append($('<li>').text(hero[tempOpp].name + "'s turn"));
+  $('#messages').append($('<li>').text(hero[tempOpp].name + "'s turn"));
   if (hero[tempOpp].energy < 6) {
     hero[tempOpp].energy++;
     $('#hero-energy' + idOppNum).append(like);
@@ -88,7 +90,7 @@ function endTurn() {
   hero[tempOpp].energy_left = hero[tempOpp].energy;
   hero[tempUser].energy_left = hero[tempUser].energy;
   energyText();
-  msg.append($('<li>').text(hero[tempOpp].name + " has " + hero[tempOpp].energy_left + " like's"));
+  $('#messages').append($('<li>').text(hero[tempOpp].name + " has " + hero[tempOpp].energy_left + " like's"));
   scroll();
   extraDmg = 0;
   energyUsedCounter = 0;
@@ -105,12 +107,12 @@ function turnCheck() {
   if (hero[tempOpp].hp <= 0 && hero[tempUser].hp <= 0) {
     $('#hero-hp' + idNum).text("0");
     $('#hero-hp' + idOppNum).text("0");
-    msg.append($('<li>').text("It's a draw! For now.."));
+    $('#messages').append($('<li>').text("It's a draw! For now.."));
     // Tie breaker rules come into play
   }
   else if (hero[tempOpp].hp <= 0) {
     $('#hero-hp' + idOppNum).text("0");
-    msg.append($('<li>').text(hero[tempUser].name + " Wins!"));
+    $('#messages').append($('<li>').text(hero[tempUser].name + " Wins!"));
     $('body').addClass('loser gray');
     var sound = new Howl({
       src: ['audio/soundOfSilence.mp3'],
@@ -122,7 +124,7 @@ function turnCheck() {
   // Confusion self kill
   else if (hero[tempUser].hp <= 0) {
     $('#hero-hp' + idNum).text("0");
-    msg.append($('<li>').text(hero[tempOpp].name + " Wins!"));
+    $('#messages').append($('<li>').text(hero[tempOpp].name + " Wins!"));
     $('body').addClass('loser gray');
     var sound = new Howl({
       src: ['audio/soundOfSilence.mp3'],
@@ -138,10 +140,10 @@ function m1_effects(num, opp) {
       if (!opp) {
           hero[tempUser].intimidate = true;
           hero[tempUser].armor += 10;
-          msg.append($('<li>').text(hero[tempUser].name + " will have +10 armor next turn."));
+          $('#messages').append($('<li>').text(hero[tempUser].name + " will have +10 armor next turn."));
           $('#armor-text' + idNum + ' span').text('+ ' + hero[tempUser].armor);
         }
-        else {
+        else { // Removing intimidate effect
           hero[tempOpp].intimidate = false;
           hero[tempOpp].armor -= 10;
           $('#armor-text' + idOppNum + ' span').text('+ ' + hero[tempOpp].armor);
@@ -151,20 +153,20 @@ function m1_effects(num, opp) {
       if (coinFlip()) {
         hero[tempUser].m2_dmg += 10;
         $('#move2-dmg' + idNum).text(hero[tempUser].m2_dmg);
-        msg.append($('<li>').text("Coin flip result: Heads"));
-        msg.append($('<li>').text(hero[tempUser].m2 + " now does " + hero[tempUser].m2_dmg + " damage"));
+        $('#messages').append($('<li>').text("Coin flip result: Heads"));
+        $('#messages').append($('<li>').text(hero[tempUser].m2 + " now does " + hero[tempUser].m2_dmg + " damage"));
       }
       else {
-        msg.append($('<li>').text("Coin flip result: Tails"));
+        $('#messages').append($('<li>').text("Coin flip result: Tails"));
       }
       break;
     case 2: // Pepe's 'Feels Bad Man' / Final Form Pepe's 'You Fool'
       if (coinFlip()) {
-        msg.append($('<li>').text("Coin flip result: Heads"));
+        $('#messages').append($('<li>').text("Coin flip result: Heads"));
       }
       else {
         extraDmg = -hero[tempUser].m1_dmg
-        msg.append($('<li>').text("Coin flip result: Tails"));
+        $('#messages').append($('<li>').text("Coin flip result: Tails"));
       }
       break;
     case 4: // Doge's 'Such Treat'
@@ -202,16 +204,24 @@ function evolve() {
   }
   hero[tempUser].energy = hero[tempUser - 1].energy;
   hero[tempUser].energy_left = hero[tempUser - 1].energy_left;
-  msg.append($('<li>').text(hero[tempUser - 1].name + " has evolved into " + hero[tempUser].name));
+  $('#messages').append($('<li>').text(hero[tempUser - 1].name + " has evolved into " + hero[tempUser].name));
   userCardPrint();
   //console.log("evolve steam sale argument = " + $('#support-name').text() == "Steam Sale" || $('#support2-name').text() == "Steam Sale" );
   if ($('#support-name' + idNum).text() == "Steam Sale" || $('#support2-name' + idNum).text() == "Steam Sale" ) // to do
     EpicSuppEffect(1);
-  }
+}
+function itemCardPrint() {
+  tempUserCheck();
+  $('#item-name' + idNum).text(itemsArr[player][tempItem].name);
+  $("#item-img" + idNum).attr("src", itemsArr[player][tempItem].img);
+  $('#item-effect' + idNum).html(itemsArr[player][tempItem].effect);
+  hero[tempUser].energy_left -= 2;
+  energyText(2, true);
+}
 function items() {
   tempUserCheck();
-  switch (tempItem) {
-    case 0: // dealWithIt
+  switch (itemsArr[player][tempItem].name) {
+    case 'Deal With It': // dealWithIt
       hero[tempUser].hp += (hero[tempUser].max_hp - hero[tempUser].hp >= 20) ? 20 : hero[tempUser].max_hp - hero[tempUser].hp;
       $('#hero-hp' + idNum).text(hero[tempUser].hp);
       if (hero[tempUser].energy < 6) {
@@ -221,10 +231,10 @@ function items() {
         energyText();
       }
       break;
-    case 1: // scumbagSteveHat
+    case 'Scumbag Steve Hat': // scumbagSteveHat
       hero[tempUser].armor += 10;
       $('#armor-text' + idNum + ' span').text('+ ' + hero[tempUser].armor);
-      console.log(hero[tempUser].armor);
+      console.log(hero[tempUser].armor + " +10");
       if (hero[tempOpp].energy > 0) {
         hero[tempOpp].energy--;
         hero[tempOpp].energy_left--;
@@ -232,16 +242,39 @@ function items() {
         energyText();
       }
       break;
-    case 2: // Nokia
+    case 'Nokia Phone': // Nokia
+      console.log("items 2 triggered");
       hero[tempUser].armor += 20;
       $('#armor-text' + idNum + ' span').text('+ ' + hero[tempUser].armor);
       break;
   }
 }
+function itemReplace() {
+  tempUserCheck();
+  if (itemsArr[player][tempItem].name == 'Scumbag Steve Hat') { // Removing Scumbag Steve Hat's armor
+    hero[tempUser].armor -= 10;
+    $('#armor-text' + idNum + ' span').text('+ ' + hero[tempUser].armor);
+  }
+  else if (itemsArr[player][tempItem].name == 'Nokia Phone') { // Removing Nokia's armor
+    hero[tempUser].armor -= 20;
+    $('#armor-text' + idNum + ' span').text('+ ' + hero[tempUser].armor);
+  }
+  itemsArr[player].splice(tempItem,1);
+  var newItem = randomG(0, itemsArr[player].length - 1);
+  $('#messages').append($('<li>').text(hero[tempUser].name + " replaced " + $("#item-name" + idNum).text() + " with " + itemsArr[player][newItem].name));
+  scroll();
+  if (userTurn)
+    userItem = newItem;
+  else
+    user2Item = newItem;
+  items();
+  itemCardPrint();
+  itemEquipped = true;
+}
 function confusion() {
   tempUserCheck();
   hero[tempUser].hp -= 10;
-  msg.append($('<li>').text(hero[tempUser].name + " took 10 damage out of confusion."));
+  $('#messages').append($('<li>').text(hero[tempUser].name + " took 10 damage out of confusion."));
   $('#hero-hp' + idNum).text(hero[tempUser].hp);
 }
 function basicSuppPrint(tempSupp, slot2) {
@@ -274,31 +307,31 @@ function epicSuppPrint(tempSupp, slot2) {
 }
 function suppReplace() {
   tempUserCheck();
-  var tempSupp;
+  var newSupp;
   do {
-    tempSupp = randomG(0, basicSuppCount);
-    console.log(tempSupp + " = tempSupp");
-  } while ($('#support-name' + idNum).text() == basicSupp[tempSupp].name || $('#support2-name' + idNum).text() == basicSupp[tempSupp].name );
+    newSupp = randomG(0, basicSuppCount);
+    console.log(newSupp + " = newSupp");
+  } while ($('#support-name' + idNum).text() == basicSupp[newSupp].name || $('#support2-name' + idNum).text() == basicSupp[newSupp].name );
   alert("Click on the Support you want to replace.");
   $("#support-card" + idNum).click(function() {
-    msg.append($('<li>').text(hero[tempUser].name + " replaced " + $("#support-name" + idNum).text() + " with " + basicSupp[tempSupp].name));
+    $('#messages').append($('<li>').text(hero[tempUser].name + " replaced " + $("#support-name" + idNum).text() + " with " + basicSupp[newSupp].name));
     scroll();
-    basicSuppPrint(tempSupp);
+    basicSuppPrint(newSupp);
     if (userTurn)
-      userSupp = tempSupp;
+      userSupp = newSupp;
     else
-      user2Supp = tempSupp;
+      user2Supp = newSupp;
     $("#support-card" + idNum).unbind('click');
     $("#support2-card" + idNum).unbind('click');
   });
   $("#support2-card" + idNum).click(function() {
-    msg.append($('<li>').text(hero[tempUser].name + " replaced " + $("#support2-name" + idNum).text() + " with " + basicSupp[tempSupp].name));
+    $('#messages').append($('<li>').text(hero[tempUser].name + " replaced " + $("#support2-name" + idNum).text() + " with " + basicSupp[newSupp].name));
     scroll();
-    basicSuppPrint(tempSupp, true);
+    basicSuppPrint(newSupp, true);
     if (userTurn)
-      userSupp2 = tempSupp;
+      userSupp2 = newSupp;
     else
-      user2Supp2 = tempSupp;
+      user2Supp2 = newSupp;
     $("#support-card" + idNum).unbind('click');
     $("#support2-card" + idNum).unbind('click');
   });
@@ -313,7 +346,7 @@ function BasicSuppEffect(supp, summoned) {
         hero[tempUser].hp += 10;
         hero[tempUser].max_hp += 10;
         $('#hero-hp' + idNum).text(hero[tempUser].hp);
-        msg.append($('<li>').text(hero[tempUser].name + " now has " + hero[tempUser].hp + " HP"));
+        $('#messages').append($('<li>').text(hero[tempUser].name + " now has " + hero[tempUser].hp + " HP"));
       }
       else {
         extraDmg += 10;
@@ -325,10 +358,10 @@ function BasicSuppEffect(supp, summoned) {
     case 2: // I Feel It
       hero[tempOpp].hp -= 30;
       $('#hero-hp' + idOppNum).text(hero[tempOpp].hp);
-      msg.append($('<li>').text(hero[tempOpp].name + " took 30 damage"));
+      $('#messages').append($('<li>').text(hero[tempOpp].name + " took 30 damage"));
       hero[tempUser].hp -= 10;
       $('#hero-hp' + idNum).text(hero[tempUser].hp);
-      msg.append($('<li>').text(hero[tempUser].name + " took 10 damage"));
+      $('#messages').append($('<li>').text(hero[tempUser].name + " took 10 damage"));
   }
 }
 function EpicSuppEffect(supp) {
@@ -336,7 +369,7 @@ function EpicSuppEffect(supp) {
   switch (supp) {
     case 0: // surpriseMotherfucker
       hero[tempOpp].hp -= 30;
-      msg.append($('<li>').text(hero[tempOpp].name + " took 30 damage"));
+      $('#messages').append($('<li>').text(hero[tempOpp].name + " took 30 damage"));
       $('#hero-hp' + idOppNum).text(hero[tempOpp].hp);
       turnCheck();
       break;

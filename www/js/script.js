@@ -32,8 +32,8 @@ $('#resetCountdown').on('click', function () {
 });*/
   var msg = $('#messages');
   // ------- Local Play-------- ///
-  user = 4//randomG(0, 9);
-  user2 = randomG(0, 9);
+  user = 0//randomG(0, 9);
+  user2 = 4//randomG(0, 9);
   console.log(msg);
   userCardPrint();
   userTurn = true;
@@ -90,7 +90,7 @@ $('#resetCountdown').on('click', function () {
             m1_effects(5);
           else if (user == 8) // Nyan Cat's 'NYANYANYAN'
             m1_effects(8);
-          if (user2Item == 3) // Horse Head
+          if (itemsArr[1][user2Item].name == "Horse Head") // Horse Head
             confusion();
           hero[user].energy_left -= hero[user].m1_energy;
           energyText(hero[user].m1_energy, true);
@@ -127,7 +127,7 @@ $('#resetCountdown').on('click', function () {
             evolve();
           if (user2 == 5) // Slenderman's 'Mutilation'
             m2_effects(5)
-          if (user2Item == 3) // Horse Head
+          if (itemsArr[1][user2Item].name == "Horse Head") // Horse Head
             confusion();
           scroll();
           attacked = true;
@@ -144,27 +144,30 @@ $('#resetCountdown').on('click', function () {
   });
   $("#menu-item").click(function() {
     if (userTurn) {
-      if (!itemEquipped) {
-        if (hero[user].energy_left >= 2) {
-            userItem = randomG(0, itemCount);
-            //userItem = 0;
-            msg.append($('<li>').text(hero[user].name + " attached " + item[userItem].name));
-            scroll();
-            $('#item-name').text(item[userItem].name);
-            $("#item-img").attr("src", item[userItem].img);
-            $('#item-effect').html(item[userItem].effect);
-            hero[user].energy_left -= 2;
-            energyText(2, true);
-            items();
-            itemEquipped = true;
+      if (itemsArr[0].length > 1) {
+        if (!itemEquipped) {
+          if (hero[user].energy_left >= 2) {
+            if (userItemsAttached == 0) {
+              userItem = randomG(0, itemsArr[0].length - 1);
+              //userItem = 0;
+              msg.append($('<li>').text(hero[user].name + " attached " + itemsArr[0][userItem].name));
+              scroll();
+              items();
+              itemCardPrint();
+              userItemsAttached++;
+              itemEquipped = true;
+            }
+            else if (userItemsAttached == 1)
+              itemReplace();
+          }
+          else
+            alert("You don't have enough likes.");
         }
-        else {
-          alert("You don't have enough likes.");
-        }
+        else
+          alert("You already equipped an Item this turn");
       }
-      else {
-        alert("You already equipped an Item this turn");
-      }
+      else
+        alert("You ran out of Item Cards.");
     }
   });
   $("#menu-1support").click(function() {
@@ -263,7 +266,7 @@ $('#resetCountdown').on('click', function () {
             m1_effects(5);
           else if (user2 == 8) // Nyan Cat's 'NYANYANYAN'
             m1_effects(8);
-          if (userItem == 3) // Horse Head
+          if (itemsArr[0][userItem].name == "Horse Head") // Horse Head
             confusion();
           hero[user2].energy_left -= hero[user2].m1_energy;
           energyText(hero[user2].m1_energy, true);
@@ -303,7 +306,7 @@ $('#resetCountdown').on('click', function () {
             evolve();
           if (user2 == 5) // Slenderman's 'Mutilation'
             m2_effects(5)
-          if (userItem == 3) // Horse Head
+          if (itemsArr[0][userItem].name == "Horse Head") // Horse Head
             confusion();
           scroll();
           attacked = true;
@@ -320,28 +323,30 @@ $('#resetCountdown').on('click', function () {
   });
   $("#menu2-item").click(function() {
     if (!userTurn) {
-      if (!itemEquipped) {
-        if (hero[user2].energy_left >= 2) {
-            user2Item = randomG(0, itemCount);
-            //user2Item = 1;
-            console.log("user2 item = " + user2Item);
-            msg.append($('<li>').text(hero[user2].name + " attached " + item[user2Item].name));
-            scroll();
-            $('#item-name2').text(item[user2Item].name);
-            $("#item-img2").attr("src", item[user2Item].img);
-            $('#item-effect2').html(item[user2Item].effect);
-            hero[user2].energy_left -= 2;
-            energyText(2, true);
-            items();
-            itemEquipped = true;
+      if (itemsArr[1].length > 1) {
+        if (!itemEquipped) {
+          if (hero[user2].energy_left >= 2) {
+            if (user2ItemsAttached == 0) {
+              user2Item = randomG(0, itemsArr[1].length - 1);
+              //user2Item = 1;
+              msg.append($('<li>').text(hero[user2].name + " attached " + itemsArr[1][user2Item].name));
+              scroll();
+              items();
+              itemCardPrint();
+              user2ItemsAttached++;
+              itemEquipped = true;
+            }
+            else if (user2ItemsAttached == 1)
+              itemReplace();
+          }
+          else
+            alert("You don't have enough likes.");
         }
-        else {
-          alert("You don't have enough likes.");
-        }
+        else
+          alert("You already equipped an Item this turn");
       }
-      else {
-        alert("You already equipped an Item this turn");
-      }
+      else
+        alert("You ran out of Item Cards.");
     }
   });
   $("#menu2-1support").click(function() {
