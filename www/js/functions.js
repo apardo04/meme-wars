@@ -33,7 +33,7 @@ function tempUserCheck() {
   tempItem = (userTurn) ? userItem : user2Item;
   tempOpp = (!userTurn) ? user : user2;
   idOppNum = (!userTurn) ? '' : '2';
-  tempOppItem = (!userTurn) ? user : user2;
+  tempOppItem = (!userTurn) ? user2Item : user2Item
 }
 function userCardPrint() {
   tempUserCheck();
@@ -170,6 +170,20 @@ function m1_effects(num, opp) {
       }
       break;
     case 4: // Doge's 'Such Treat'
+      if (coinFlip()) {
+        $('#messages').append($('<li>').text("Coin flip result: Heads"));
+        if (itemsArr[player].length > 1) {
+          hero[tempUser].suchTreat = true;
+          var tempItemsAttached = (userTurn) ? userItemsAttached : user2ItemsAttached;
+          itemReplace(tempItemsAttached);
+        }
+        else {
+          $('#messages').append($('<li>').text(hero[tempUser].name + " ran out of item cards."));
+        }
+      }
+      else {
+        $('#messages').append($('<li>').text("Coin flip result: Tails"));
+      }
       break;
     case 5: // Slenderman's 'Static'
       hero[tempUser].m2_dmg += 20;
@@ -215,8 +229,13 @@ function itemCardPrint() {
   $('#item-name' + idNum).text(itemsArr[player][tempItem].name);
   $("#item-img" + idNum).attr("src", itemsArr[player][tempItem].img);
   $('#item-effect' + idNum).html(itemsArr[player][tempItem].effect);
-  hero[tempUser].energy_left -= 2;
-  energyText(2, true);
+  if (!hero[4].suchTreat) {
+    hero[tempUser].energy_left -= 2;
+    energyText(2, true);
+  }
+  else {
+    hero[4].suchTreat = false;
+  }
 }
 function items() {
   tempUserCheck();
@@ -249,19 +268,34 @@ function items() {
       break;
   }
 }
-function itemReplace() {
+function itemReplace(itemsAttached) {
   tempUserCheck();
-  if (itemsArr[player][tempItem].name == 'Scumbag Steve Hat') { // Removing Scumbag Steve Hat's armor
-    hero[tempUser].armor -= 10;
-    $('#armor-text' + idNum + ' span').text('+ ' + hero[tempUser].armor);
+  console.log(itemsAttached);
+  if (itemsAttached == 1) {
+    if (itemsArr[player][tempItem].name == 'Scumbag Steve Hat') { // Removing Scumbag Steve Hat's armor
+      hero[tempUser].armor -= 10;
+      $('#armor-text' + idNum + ' span').text('+ ' + hero[tempUser].armor);
+    }
+    else if (itemsArr[player][tempItem].name == 'Nokia Phone') { // Removing Nokia's armor
+      hero[tempUser].armor -= 20;
+      $('#armor-text' + idNum + ' span').text('+ ' + hero[tempUser].armor);
+    }
+    console.log(itemsArr[player] + " before splice");
+    console.log(itemsArr[player][tempItem] + " item being splices");
+    itemsArr[player].splice(tempItem,1);
+    console.log(itemsArr[player] + " after splice");
+    var newItem = randomG(0, itemsArr[player].length - 1);
+    $('#messages').append($('<li>').text(hero[tempUser].name + " replaced " + $("#item-name" + idNum).text() + " with " + itemsArr[player][newItem].name));
   }
-  else if (itemsArr[player][tempItem].name == 'Nokia Phone') { // Removing Nokia's armor
-    hero[tempUser].armor -= 20;
-    $('#armor-text' + idNum + ' span').text('+ ' + hero[tempUser].armor);
+  else {
+    console.log("!replacing");
+    newItem = randomG(0, itemsArr[player].length - 1);
+    $('#messages').append($('<li>').text(hero[tempUser].name + " attached " + itemsArr[player][newItem].name));
+    if (userTurn)
+      userItemsAttached++;
+    else
+      user2ItemsAttached++;
   }
-  itemsArr[player].splice(tempItem,1);
-  var newItem = randomG(0, itemsArr[player].length - 1);
-  $('#messages').append($('<li>').text(hero[tempUser].name + " replaced " + $("#item-name" + idNum).text() + " with " + itemsArr[player][newItem].name));
   scroll();
   if (userTurn)
     userItem = newItem;
