@@ -32,7 +32,7 @@ $('#resetCountdown').on('click', function () {
 });*/
   var msg = $('#messages');
   // ------- Local Play-------- ///
-  user = 4//randomG(0, 9);
+  user = 10//randomG(0, 9);
   user2 = randomG(0, 9);
   console.log(msg);
   userCardPrint();
@@ -146,9 +146,8 @@ $('#resetCountdown').on('click', function () {
     if (userTurn) {
       if (itemsArr[0].length > 1) {
         if (!itemEquipped) {
-          if (hero[user].energy_left >= 2) {
+          if (hero[user].energy_left >= 2)
             itemReplace(userItemsAttached);
-          }
           else
             alert("You don't have enough likes.");
         }
@@ -314,20 +313,8 @@ $('#resetCountdown').on('click', function () {
     if (!userTurn) {
       if (itemsArr[1].length > 1) {
         if (!itemEquipped) {
-          if (hero[user2].energy_left >= 2) {
-            if (user2ItemsAttached == 0) {
-              user2Item = randomG(0, itemsArr[1].length - 1);
-              //user2Item = 1;
-              msg.append($('<li>').text(hero[user2].name + " attached " + itemsArr[1][user2Item].name));
-              scroll();
-              items();
-              itemCardPrint();
-              user2ItemsAttached++;
-              itemEquipped = true;
-            }
-            else if (user2ItemsAttached == 1)
-              itemReplace();
-          }
+          if (hero[user2].energy_left >= 2)
+            itemReplace(user2ItemsAttached);
           else
             alert("You don't have enough likes.");
         }

@@ -7,6 +7,7 @@ var basicSupp = [];
 var epicSupp = [];
 
 // -------- Hero JS -------- //
+// Hero Object Template {name:, hp:, max_hp:, armor:, img:, m1:, m1_energy:, m1_dmg:, m1_effect:, m2:, m2_energy:, m2_dmg:, m2_effect:, energy:, energy_left:}
 var spongegar = {name: 'SpongeGar', hp: 160, max_hp: 160, armor: 0, img: 'img/Heroes/spongegar.png', m1: 'Intimidate', m1_energy: 3, m1_dmg: 20, m1_effect: 'SpongeGar has +10 armor this turn.', m2: 'React', m2_energy: 5, m2_dmg: 50, m2_effect: '', energy: 0, energy_left: 0, intimidate: false};
 var datboi = {name: 'Dat Boi', hp: 160, max_hp: 160, armor: 0, img: 'img/Heroes/datboi.png', m1: 'Ohh Shit', m1_energy: 3, m1_dmg: 30, m1_effect: 'Flip a coin. If heads, Waddup does +10 more damage(stacks)', m2: 'Waddup', m2_energy: 5, m2_dmg: 60, m2_effect: '', energy: 0, energy_left: 0};
 var pepe = {name: 'Pepe', hp: 120, max_hp: 120, armor: 0, img: 'img/Heroes/pepe.png', m1: 'Feels Bad Man', m1_energy: 1, m1_dmg: 30, m1_effect: 'Flip a coin. If tails, this attack does nothing.', m2: 'Evolve: Final Form Pepe', m2_energy: 4, m2_dmg: 40, m2_effect: '', energy: 0, energy_left: 0};
@@ -17,9 +18,10 @@ var harambe = {name: 'Harambe', hp: 200, max_hp: 200, armor: 0, img: 'img/Heroes
 var chuckNorris = {name: 'Chuck Norris', hp: 170, max_hp: 170, armor: 0, img: 'img/Heroes/chuckNorris.png', m1: 'Roundhouse', m1_energy: 3, m1_dmg: 30, m1_effect: '', m2: 'Beard Deflect', m2_energy: 5, m2_dmg: 50, m2_effect: 'Flip a coin. If heads, Chuck Norris deflects 20 damage next turn.', energy: 0, energy_left: 0};
 var nyanCat = {name: 'Nyan Cat', hp: 130, max_hp: 130, armor: 0, img: 'img/Heroes/nyanCat.png', m1: 'NYANYANYAN', m1_energy: 2, m1_dmg: 0, m1_effect: 'Heal 20 HP', m2: 'Rainbow Blast', m2_energy: 5, m2_dmg: 60, m2_effect: '', energy: 0, energy_left: 0};
 var vapeNation = {name: 'Vape Nation', hp: 150, max_hp: 150, armor: 0, img: 'img/Heroes/vapeNation.png', m1:'Vape Screen', m1_energy: 2, m1_dmg: 10, m1_effect: 'Opponent has to flip a coin before attacking next turn.<br>If heads, the attack misses.', m2: 'Fattest Rip', m2_energy: 5, m2_dmg: 50, m2_effect: '', energy: 0, energy_left: 0};
+var rickHarrison = {name: 'Rick Harrison', hp: 150, max_hp: 150, armor: 0, img: 'img/Heroes/rickHarrison.png', m1: 'Best I Can Do', m1_energy: 3, m1_dmg: '20', m1_effect: '', m2: 'idk yet', m2_energy: 5, m2_dmg: 50, m2_effect: '', energy: 0, energy_left: 0};
 hero[0] = spongegar; hero[1] = datboi; hero[2] = pepe; hero[3] = finalFormPepe;
 hero[4] = doge; hero[5] = slenderman; hero[6] = harambe; hero[7] = chuckNorris;
-hero[8] = nyanCat; hero[9] = vapeNation;
+hero[8] = nyanCat; hero[9] = vapeNation; hero[10]= rickHarrison;
 
 // -------- Item JS -------- //
 var dealWithIt = {name: 'Deal With It', img: 'img/Items/dealWithIt.png', effect: 'Heal +20 HP <br> +1 Like'};
