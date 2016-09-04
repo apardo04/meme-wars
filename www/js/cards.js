@@ -39,20 +39,22 @@ var meGusta = {name: 'Me Gusta', img: 'img/supports/megusta.png', effect: '+10 H
 var foreverAlone = {name: 'Forever Alone', img: 'img/supports/foreverAlone.png', effect: 'If this is your only support:<br>+ 20 damage'};
 var iFeelIt = {name: "I Feel It", img: 'img/supports/iFeelIt.png', effect: 'Opponent takes 30 damage.<br>You take 10 damage.'}
 basicSupp[0] = meGusta; basicSupp[1] = foreverAlone; basicSupp[2] = iFeelIt;
-var basicSuppCount = basicSupp.length -1;
 var basicArr = {
   0:basicSupp.slice(0),
   1:basicSupp.slice(0)
 };
+var userBasicCount = basicArr[0].length;
+var user2BasicCount = basicArr[1].length;
 
 // -------- Epic Support JS -------- //
 //var ifYouKnowWhatIMean = {name: 'If You know What I Mean', hp: 30, img: 'img/supports/ifyouknowhatimean.png', effect: '+20 Armor <br> If this is your only support:<br>Summon a 1 like support'}
 var surpriseMotherfucker = {name: "Surprise Motherfucker", img: 'img/supports/surpriseMotherfucker.gif', effect: 'Opponent takes 30 damage'};
 var steamSale = {name: "Steam Sale", img: 'img/supports/steamSale.png', effect: 'Your attacks cost 1 less like'};
 var hillaryVsTrump = {name: "Hillary Vs Trump", img: 'img/supports/hillaryVsTrump.jpg', effect: 'Flip a coin. If heads, Trump builds a wall(+20 armor). If tails, Hillary deletes the opponents e-mail(item).'}
-epicSupp[0] = surpriseMotherfucker; epicSupp[1] = steamSale; epicSupp[3] = hillaryVsTrump;
-var epicSuppCount = epicSupp.length -1;
+epicSupp[0] = surpriseMotherfucker; epicSupp[1] = steamSale; epicSupp[2] = hillaryVsTrump;
 var epicArr = {
   0:epicSupp.slice(0),
   1:epicSupp.slice(0)
 };
+var userEpicCount = epicArr[0].length;
+var user2EpicCount = epicArr[1].length;

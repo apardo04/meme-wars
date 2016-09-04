@@ -345,6 +345,10 @@ function basicReplace(suppsSummoned, basic) {
       scroll();
       basicSuppPrint(newSupp);
       basicSummoned = true;
+      if (userTurn)
+        userBasicCount--;
+      else
+        user2BasicCount--;
     }
     else {
       newSupp = randomG(0, epicArr[player].length - 1);
@@ -352,6 +356,10 @@ function basicReplace(suppsSummoned, basic) {
       scroll();
       epicSuppPrint(newSupp);
       epicSummoned = true;
+      if (userTurn)
+        userEpicCount--;
+      else
+        user2EpicCount--;
     }
     if (userTurn) {
       userSupp = newSupp;
@@ -366,11 +374,15 @@ function basicReplace(suppsSummoned, basic) {
     if (basic) {
       do {
         newSupp = randomG(0, basicArr[player].length - 1);
-      } while ($('#support-name').text() == basicArr[player][newSupp].name);
+      } while ($('#support-name' + idNum).text() == basicArr[player][newSupp].name);
       $('#messages').append($('<li>').text(hero[tempUser].name + " summoned " + basicArr[player][newSupp].name));
       scroll();
       basicSuppPrint(newSupp, true);
       basicSummoned = true;
+      if (userTurn)
+        userBasicCount--;
+      else
+        user2BasicCount--;
     }
     else {
       do {
@@ -380,6 +392,10 @@ function basicReplace(suppsSummoned, basic) {
       scroll();
       epicSuppPrint(newSupp, true);
       epicSummoned = true;
+      if (userTurn)
+        userEpicCount--;
+      else
+        user2EpicCount--;
     }
     if (userTurn) {
       userSupp2 = newSupp;
@@ -396,65 +412,110 @@ function basicReplace(suppsSummoned, basic) {
         newSupp = randomG(0, basicArr[player].length - 1);
       } while ($('#support-name' + idNum).text() == basicArr[player][newSupp].name || $('#support2-name' + idNum).text() == basicArr[player][newSupp].name );
       alert("Click on the Support you want to replace.");
-      $("#support-card" + idNum).click(function() {
+      $("#support-card" + idNum).click(function() { // Replacing Slot1 with a Basic
         $('#messages').append($('<li>').text(hero[tempUser].name + " replaced " + $("#support-name" + idNum).text() + " with " + basicArr[player][newSupp].name));
         scroll();
-        basicSuppPrint(newSupp);
-        tempSupp = (userTurn) ? userSupp : user2Supp
-        basicArr[player].splice(tempSupp, 1);
         if (userTurn) {
-          basicArr[player].splice(userSupp, 1);
+          if (basicArr[player].length - 1 >= userSupp && $('#support-name' + idNum).text() == basicArr[player][userSupp].name) // if/elseif checks if replacing a basic or epic on user slot1
+            basicArr[player].splice(userSupp, 1);
+          else if (epicArr[player].length - 1 >= userSupp && $('#support-name' + idNum).text() == epicArr[player][userSupp].name)
+            epicArr[player].splice(userSupp, 1);
           userSupp = newSupp;
+          userBasicCount--;
         }
         else {
-          basicArr[player].splice(user2Supp, 1);
+          if (basicArr[player].length - 1 >= userSupp && $('#support-name' + idNum).text() == basicArr[player][user2Supp].name) // if/elseif checks if replacing a basic or epic on user2 slot1
+            basicArr[player].splice(user2Supp, 1);
+          else if (epicArr[player].length - 1 >= userSupp && $('#support-name' + idNum).text() == epicArr[player][user2Supp].name)
+            epicArr[player].splice(user2Supp, 1);
           user2Supp = newSupp;
+          user2BasicCount--;
         }
+        basicSuppPrint(newSupp);
         $("#support-card" + idNum).unbind('click');
         $("#support2-card" + idNum).unbind('click');
       });
-      $("#support2-card" + idNum).click(function() {
+      $("#support2-card" + idNum).click(function() { // Replacing Slot2 with a Basic
         $('#messages').append($('<li>').text(hero[tempUser].name + " replaced " + $("#support2-name" + idNum).text() + " with " + basicArr[player][newSupp].name));
         scroll();
-        basicSuppPrint(newSupp, true);
         if (userTurn) {
-          basicArr[player].splice(userSupp2, 1);
+          if (basicArr[player].length - 1 >= userSupp2 && $('#support2-name' + idNum).text() == basicArr[player][userSupp2].name) // if/elseif checks if replacing a basic or epic on user slot2
+            basicArr[player].splice(userSupp2, 1);
+          else if (epicArr[player].length - 1 >= userSupp2 && $('#support2-name' + idNum).text() == epicArr[player][userSupp2].name)
+            epicArr[player].splice(userSupp2, 1);
           userSupp2 = newSupp;
+          userBasicCount--;
         }
         else {
-          basicArr[player].splice(user2Supp2, 1);
+          if (basicArr[player].length - 1 >= user2Supp2 && $('#support2-name' + idNum).text() == basicArr[player][user2Supp2].name) // if/elseif checks if replacing a basic or epic on user2 slot2
+            basicArr[player].splice(user2Supp2, 1);
+          else if (epicArr[player].length - 1 >= user2Supp2 && $('#support2-name' + idNum).text() == epicArr[player][user2Supp2].name)
+            epicArr[player].splice(user2Supp2, 1);
           user2Supp2 = newSupp;
+          user2BasicCount--;
         }
+        basicSuppPrint(newSupp, true);
         $("#support-card" + idNum).unbind('click');
         $("#support2-card" + idNum).unbind('click');
       });
       basicSummoned = true;
     }
-    else {
-      alert("epic replace");
+    else { // epic replace
+      do {
+        newSupp = randomG(0, epicArr[player].length - 1);
+      } while ($('#support-name' + idNum).text() == epicArr[player][newSupp].name || $('#support2-name' + idNum).text() == epicArr[player][newSupp].name );
+      alert("Click on the Support you want to replace.");
+      $("#support-card" + idNum).click(function() {
+        $('#messages').append($('<li>').text(hero[tempUser].name + " replaced " + $("#support-name" + idNum).text() + " with " + epicArr[player][newSupp].name));
+        scroll();
+        if (userTurn) {
+          if (basicArr[player].length - 1 >= userSupp && $('#support-name' + idNum).text() == basicArr[player][userSupp].name) // if/elseif checks if replacing a basic or epic on user slot1
+            basicArr[player].splice(userSupp, 1);
+          else if (epicArr[player].length - 1 >= userSupp && $('#support-name' + idNum).text() == epicArr[player][userSupp].name)
+            epicArr[player].splice(userSupp, 1);
+          userSupp = newSupp;
+          userEpicCount--;
+        }
+        else {
+          if (basicArr[player].length - 1 >= user2Supp && $('#support-name' + idNum).text() == basicArr[player][user2Supp].name) // if/elseif checks if replacing a basic or epic on user2 slot1
+            basicArr[player].splice(user2Supp, 1);
+          else if (epicArr[player].length - 1 >= user2Supp && $('#support-name' + idNum).text() == epicArr[player][user2Supp].name)
+            epicArr[player].splice(user2Supp, 1);
+          user2Supp = newSupp;
+          user2EpicCount--;
+        }
+        epicSuppPrint(newSupp);
+        $("#support-card" + idNum).unbind('click');
+        $("#support2-card" + idNum).unbind('click');
+      });
+      $("#support2-card" + idNum).click(function() {
+        $('#messages').append($('<li>').text(hero[tempUser].name + " replaced " + $("#support2-name" + idNum).text() + " with " + epicArr[player][newSupp].name));
+        scroll();
+        if (userTurn) {
+          if (basicArr[player].length - 1 >= userSupp2 && $('#support2-name' + idNum).text() == basicArr[player][userSupp2].name) // if/elseif checks if replacing a basic or epic on user slot2
+            basicArr[player].splice(userSupp2, 1);
+          else if (epicArr[player].length - 1 >= userSupp2 && $('#support2-name' + idNum).text() == epicArr[player][userSupp2].name)
+            epicArr[player].splice(userSupp2, 1);
+          userSupp2 = newSupp;
+          userEpicCount--;
+        }
+        else {
+          if (basicArr[player].length - 1 >= user2Supp2 && $('#support2-name' + idNum).text() == basicArr[player][user2Supp2].name) // if/elseif checks if replacing a basic or epic on user2 slot2
+            basicArr[player].splice(user2Supp2, 1);
+          else if (epicArr[player].length - 1 >= user2Supp2 && $('#support2-name' + idNum).text() == epicArr[player][user2Supp2].name)
+            epicArr[player].splice(user2Supp2, 1);
+          user2Supp2 = newSupp;
+          user2EpicCount--;
+        }
+        epicSuppPrint(newSupp, true);
+        $("#support-card" + idNum).unbind('click');
+        $("#support2-card" + idNum).unbind('click');
+      });
+      epicSummoned = true;
     }
   }
   return;
 }
-/*function epicReplace(suppsSummoned) {
-  tempUserCheck();
-  if (suppsSummoned == 0) {
-    newSupp = randomG(0, epicArr[player].length - 1);
-    $('#messages').append($('<li>').text(hero[tempUser].name + " summoned " + epicArr[player][newSupp].name));
-    scroll();
-    epicSuppPrint(newSupp);
-    epicSummoned = true;
-    if (userTurn) {
-      userSupp = newSupp;
-      userSuppsSummoned++;
-    }
-    else {
-      user2Supp = newSupp;
-      user2SuppsSummoned++;
-    }
-  }
-  else if (suppsSummoned == 1)
-}*/
 function BasicSuppEffect(supp, summoned) {
   tempUserCheck();
   switch (supp) {

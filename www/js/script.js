@@ -160,7 +160,7 @@ $('#resetCountdown').on('click', function () {
   });
   $("#menu-1support").click(function() {
     if (userTurn) {
-      if (basicArr[0].length > 2) {
+      if (userBasicCount > 0) {
         if (!basicSummoned) {
           if (hero[user].energy_left > 0)
             basicReplace(userSuppsSummoned, true);
@@ -168,29 +168,29 @@ $('#resetCountdown').on('click', function () {
             alert("You don't have enough like's to summon a Basic Support.");
         }
         else {
-          alert("You already played a Basic Support this turn.")
+          alert("You already played a Basic Support this turn.");
         }
       }
       else {
-        alert("You ran out of Basic Support Cards.")
+        alert("You ran out of Basic Support Cards.");
       }
     }
   });
   $("#menu-3support").click(function() {
     if (userTurn) {
-      if (epicArr[0].length -1) {
+      if (userEpicCount > 0) {
         if (!epicSummoned) {
           if (hero[user].energy_left >= 3)
             basicReplace(userSuppsSummoned);
           else
-            alert("You dont have enough like's to summon an Epic Support.")
+            alert("You dont have enough like's to summon an Epic Support.");
         }
         else {
-          alert("You already played an Epic Support this turn.")
+          alert("You already played an Epic Support this turn.");
         }
       }
       else {
-        alert("You ran out of Epic Support Cards.")
+        alert("You ran out of Epic Support Cards.");
       }
     }
   });
@@ -297,7 +297,7 @@ $('#resetCountdown').on('click', function () {
   });
   $("#menu2-1support").click(function() {
     if (!userTurn) {
-      if (basicArr[1].length > 2) {
+      if (user2BasicCount > 0) {
         if (!basicSummoned) {
           if (hero[user2].energy_left > 0)
             basicReplace(user2SuppsSummoned, true);
@@ -315,30 +315,19 @@ $('#resetCountdown').on('click', function () {
   });
   $("#menu2-3support").click(function() {
     if (!userTurn) {
-      if (hero[user2].energy_left >= 3) {
-        if (user2SuppsSummoned == 0) {
-          user2Supp = randomG(0, epicSuppCount);
-          //user2Supp = 1;
-          msg.append($('<li>').text(hero[user2].name + " summoned " + epicSupp[user2Supp].name));
-          scroll();
-          epicSuppPrint(user2Supp);
-          user2SuppsSummoned++;
-        }
-        else if (user2SuppsSummoned == 1){
-          do {
-            user2Supp2 = randomG(0, epicSuppCount);
-          } while ($('#support-name2').text() == epicSupp[user2Supp2].name);
-          msg.append($('<li>').text(hero[user2].name + " summoned " + epicSupp[user2Supp2].name));
-          scroll();
-          epicSuppPrint(user2Supp2, true);
-          user2SuppsSummoned++;
+      if (user2EpicCount > 0) {
+        if (!epicSummoned) {
+          if (hero[user2].energy_left >= 3)
+            basicReplace(user2SuppsSummoned);
+          else
+            alert("You dont have enough like's to summon an Epic Support.");
         }
         else {
-          alert("You can only have 2 supports summoned.")
+          alert("You already played an Epic Support this turn.");
         }
       }
       else {
-        alert("You dont have enough like's to summon an Epic Support.")
+        alert("You ran out of Epic Support Cards.");
       }
     }
   });
