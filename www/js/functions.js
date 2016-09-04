@@ -1,7 +1,7 @@
 var msg = $('#messages');
 var userItem = 0;
-var userSupp = 0;  // Slot 1 Support
-var userSupp2 = 0; // Slot 2 Support
+var userSupp = 0;  // HTML Slot 1 Support
+var userSupp2 = 0; // HTML Slot 2 Support
 var userItemsAttached =  0; // How many items are attached
 var userSuppsSummoned = 0; // How many supports have been summoned
 var user2Item = 0;
@@ -21,6 +21,7 @@ var tempItem // Makes userItem dynamic
 var tempOpp;
 var idOppNum;
 var tempOppItem;
+var newSupp; // Temp var when drawing a new supp
 var basicSummoned = false; // If false, current user hasn't played a basic Supp this turn
 var epicSummoned = false;
 var itemEquipped = false;
@@ -270,8 +271,16 @@ function items() {
 }
 function itemReplace(itemsAttached) {
   tempUserCheck();
-  console.log(itemsAttached);
-  if (itemsAttached == 1) {
+  var newItem;
+  if (itemsAttached == 0) {
+    newItem = randomG(0, itemsArr[player].length - 1);
+    $('#messages').append($('<li>').text(hero[tempUser].name + " attached " + itemsArr[player][newItem].name));
+    if (userTurn)
+      userItemsAttached++;
+    else
+      user2ItemsAttached++;
+  }
+  else {
     if (itemsArr[player][tempItem].name == 'Scumbag Steve Hat') { // Removing Scumbag Steve Hat's armor
       hero[tempUser].armor -= 10;
       $('#armor-text' + idNum + ' span').text('+ ' + hero[tempUser].armor);
@@ -280,21 +289,9 @@ function itemReplace(itemsAttached) {
       hero[tempUser].armor -= 20;
       $('#armor-text' + idNum + ' span').text('+ ' + hero[tempUser].armor);
     }
-    console.log(itemsArr[player] + " before splice");
-    console.log(itemsArr[player][tempItem] + " item being splices");
     itemsArr[player].splice(tempItem,1);
-    console.log(itemsArr[player] + " after splice");
-    var newItem = randomG(0, itemsArr[player].length - 1);
-    $('#messages').append($('<li>').text(hero[tempUser].name + " replaced " + $("#item-name" + idNum).text() + " with " + itemsArr[player][newItem].name));
-  }
-  else {
-    console.log("!replacing");
     newItem = randomG(0, itemsArr[player].length - 1);
-    $('#messages').append($('<li>').text(hero[tempUser].name + " attached " + itemsArr[player][newItem].name));
-    if (userTurn)
-      userItemsAttached++;
-    else
-      user2ItemsAttached++;
+    $('#messages').append($('<li>').text(hero[tempUser].name + " replaced " + $("#item-name" + idNum).text() + " with " + itemsArr[player][newItem].name));
   }
   scroll();
   if (userTurn)
@@ -339,39 +336,125 @@ function epicSuppPrint(tempSupp, slot2) {
   if (tempSupp == 1)
     EpicSuppEffect(1); // Steam Sale
 }
-function suppReplace() {
+function basicReplace(suppsSummoned, basic) {
   tempUserCheck();
-  var newSupp;
-  do {
-    newSupp = randomG(0, basicSuppCount);
-    console.log(newSupp + " = newSupp");
-  } while ($('#support-name' + idNum).text() == basicSupp[newSupp].name || $('#support2-name' + idNum).text() == basicSupp[newSupp].name );
-  alert("Click on the Support you want to replace.");
-  $("#support-card" + idNum).click(function() {
-    $('#messages').append($('<li>').text(hero[tempUser].name + " replaced " + $("#support-name" + idNum).text() + " with " + basicSupp[newSupp].name));
-    scroll();
-    basicSuppPrint(newSupp);
-    if (userTurn)
+  if (suppsSummoned == 0) {
+    if (basic) {
+      newSupp = randomG(0, basicArr[player].length - 1);
+      $('#messages').append($('<li>').text(hero[tempUser].name + " summoned " + basicArr[player][newSupp].name));
+      scroll();
+      basicSuppPrint(newSupp);
+      basicSummoned = true;
+    }
+    else {
+      newSupp = randomG(0, epicArr[player].length - 1);
+      $('#messages').append($('<li>').text(hero[tempUser].name + " summoned " + epicArr[player][newSupp].name));
+      scroll();
+      epicSuppPrint(newSupp);
+      epicSummoned = true;
+    }
+    if (userTurn) {
       userSupp = newSupp;
-    else
+      userSuppsSummoned++;
+    }
+    else {
       user2Supp = newSupp;
-    $("#support-card" + idNum).unbind('click');
-    $("#support2-card" + idNum).unbind('click');
-  });
-  $("#support2-card" + idNum).click(function() {
-    $('#messages').append($('<li>').text(hero[tempUser].name + " replaced " + $("#support2-name" + idNum).text() + " with " + basicSupp[newSupp].name));
-    scroll();
-    basicSuppPrint(newSupp, true);
-    if (userTurn)
+      user2SuppsSummoned++;
+    }
+  }
+  else if (suppsSummoned == 1) {
+    if (basic) {
+      do {
+        newSupp = randomG(0, basicArr[player].length - 1);
+      } while ($('#support-name').text() == basicArr[player][newSupp].name);
+      $('#messages').append($('<li>').text(hero[tempUser].name + " summoned " + basicArr[player][newSupp].name));
+      scroll();
+      basicSuppPrint(newSupp, true);
+      basicSummoned = true;
+    }
+    else {
+      do {
+        newSupp = randomG(0, epicArr[player].length - 1);
+      } while ($('#support-name').text() == epicArr[player][newSupp].name);
+      $('#messages').append($('<li>').text(hero[tempUser].name + " summoned " + epicArr[player][newSupp].name));
+      scroll();
+      epicSuppPrint(newSupp, true);
+      epicSummoned = true;
+    }
+    if (userTurn) {
       userSupp2 = newSupp;
-    else
+      userSuppsSummoned++;
+    }
+    else {
       user2Supp2 = newSupp;
-    $("#support-card" + idNum).unbind('click');
-    $("#support2-card" + idNum).unbind('click');
-  });
-  basicSummoned = true;
+      user2SuppsSummoned++;
+    }
+  }
+  else if (suppsSummoned == 2) {
+    if (basic) {
+      do {
+        newSupp = randomG(0, basicArr[player].length - 1);
+      } while ($('#support-name' + idNum).text() == basicArr[player][newSupp].name || $('#support2-name' + idNum).text() == basicArr[player][newSupp].name );
+      alert("Click on the Support you want to replace.");
+      $("#support-card" + idNum).click(function() {
+        $('#messages').append($('<li>').text(hero[tempUser].name + " replaced " + $("#support-name" + idNum).text() + " with " + basicArr[player][newSupp].name));
+        scroll();
+        basicSuppPrint(newSupp);
+        tempSupp = (userTurn) ? userSupp : user2Supp
+        basicArr[player].splice(tempSupp, 1);
+        if (userTurn) {
+          basicArr[player].splice(userSupp, 1);
+          userSupp = newSupp;
+        }
+        else {
+          basicArr[player].splice(user2Supp, 1);
+          user2Supp = newSupp;
+        }
+        $("#support-card" + idNum).unbind('click');
+        $("#support2-card" + idNum).unbind('click');
+      });
+      $("#support2-card" + idNum).click(function() {
+        $('#messages').append($('<li>').text(hero[tempUser].name + " replaced " + $("#support2-name" + idNum).text() + " with " + basicArr[player][newSupp].name));
+        scroll();
+        basicSuppPrint(newSupp, true);
+        if (userTurn) {
+          basicArr[player].splice(userSupp2, 1);
+          userSupp2 = newSupp;
+        }
+        else {
+          basicArr[player].splice(user2Supp2, 1);
+          user2Supp2 = newSupp;
+        }
+        $("#support-card" + idNum).unbind('click');
+        $("#support2-card" + idNum).unbind('click');
+      });
+      basicSummoned = true;
+    }
+    else {
+      alert("epic replace");
+    }
+  }
   return;
 }
+/*function epicReplace(suppsSummoned) {
+  tempUserCheck();
+  if (suppsSummoned == 0) {
+    newSupp = randomG(0, epicArr[player].length - 1);
+    $('#messages').append($('<li>').text(hero[tempUser].name + " summoned " + epicArr[player][newSupp].name));
+    scroll();
+    epicSuppPrint(newSupp);
+    epicSummoned = true;
+    if (userTurn) {
+      userSupp = newSupp;
+      userSuppsSummoned++;
+    }
+    else {
+      user2Supp = newSupp;
+      user2SuppsSummoned++;
+    }
+  }
+  else if (suppsSummoned == 1)
+}*/
 function BasicSuppEffect(supp, summoned) {
   tempUserCheck();
   switch (supp) {

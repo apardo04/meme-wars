@@ -314,7 +314,8 @@ div#item-card2 {
 
 /* Support CSS */
 div.support {
-  background: radial-gradient(100% 16%, #5b4c7d, #f3a46c); /*#ffbb67;*/
+  /*background: radial-gradient(100% 16%, #5b4c7d, #f3a46c);*/ /*#ffbb67;*/
+  background: #f3a46c;
 }
 div.card-name {
   font-family: comic sans-serif;

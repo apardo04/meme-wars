@@ -1,12 +1,11 @@
 when replacing a card, make everything else not clickable.
 
-user2 likes div position.
-
-spongegar +10 armor next turn
-
 harambe for every extra like paid +10 damage
 
-splice out a switched support or item with:
-basicSupp.splice(userSupp, 1);
 
-maybe make a basic slot and an epic slot. Only one of each. Easier programming?
+if ($('#support-name' + idNum).text() == basicArr[player][tempSupp])
+  basicArr[player].splice(tempSupp, 1);
+else if ($('#support-name' + idNum).text() == epicArr[player][tempSupp])
+  epicArr[player].splice(tempSupp, 1);
+else
+  console.log("Error replacing Supp: $('#support-name' + idNum).text() = " + $('#support-name' + idNum).text() + "basicArr[player][tempSupp]/ epic = " basicArr[player][tempSupp] + " " + epicArr[player][tempSupp]);

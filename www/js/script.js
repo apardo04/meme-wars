@@ -32,7 +32,7 @@ $('#resetCountdown').on('click', function () {
 });*/
   var msg = $('#messages');
   // ------- Local Play-------- ///
-  user = 10//randomG(0, 9);
+  user = randomG(0, 9);
   user2 = randomG(0, 9);
   console.log(msg);
   userCardPrint();
@@ -68,7 +68,7 @@ $('#resetCountdown').on('click', function () {
       if (userTurn) {
         if (hero[user].energy_left >= hero[user].m1_energy) {
           msg.append($('<li>').text(hero[user].name + " used " + hero[user].m1));
-          if ((userSuppsSummoned > 0 && $('#support-name').text() == basicSupp[0].name) || (userSuppsSummoned == 2 && $('#support2-name').text() == basicSupp[0].name))
+          if ((userSuppsSummoned > 0 && $('#support-name').text() == "Me Gusta") || (userSuppsSummoned == 2 && $('#support2-name').text() == "Me Gusta"))
             BasicSuppEffect(0); // Me Gusta extraDmg
           if (userSuppsSummoned == 1 && $('#support-name').text() == basicSupp[1].name)
             BasicSuppEffect(1); // Forever Alone extraDmg
@@ -152,7 +152,7 @@ $('#resetCountdown').on('click', function () {
             alert("You don't have enough likes.");
         }
         else
-          alert("You already equipped an Item this turn");
+          alert("You already equipped an Item this turn.");
       }
       else
         alert("You ran out of Item Cards.");
@@ -160,67 +160,37 @@ $('#resetCountdown').on('click', function () {
   });
   $("#menu-1support").click(function() {
     if (userTurn) {
-      if (!basicSummoned) {
-        if (hero[user].energy_left > 0) {
-          if (userSuppsSummoned == 0) {
-            userSupp = randomG(0, basicSuppCount);
-            //userSupp = 1;
-            msg.append($('<li>').text(hero[user].name + " summoned " + basicSupp[userSupp].name));
-            scroll();
-            basicSuppPrint(userSupp);
-            basicSummoned = true;
-            userSuppsSummoned++;
-          }
-          else if (userSuppsSummoned == 1){
-            do {
-              userSupp2 = randomG(0, basicSuppCount);
-              console.log("userSupp2 = " + userSupp2);
-            } while ($('#support-name').text() == basicSupp[userSupp2].name);
-            msg.append($('<li>').text(hero[user].name + " summoned " + basicSupp[userSupp2].name));
-            scroll();
-            basicSuppPrint(userSupp2, true);
-            basicSummoned = true;
-            userSuppsSummoned++;
-          }
-          else if (userSuppsSummoned == 2) {
-            suppReplace();
-          }
+      if (basicArr[0].length > 2) {
+        if (!basicSummoned) {
+          if (hero[user].energy_left > 0)
+            basicReplace(userSuppsSummoned, true);
+          else
+            alert("You don't have enough like's to summon a Basic Support.");
         }
         else {
-          alert("You don't have enough likes");
+          alert("You already played a Basic Support this turn.")
         }
       }
       else {
-        alert("You already played a Basic Support this turn")
+        alert("You ran out of Basic Support Cards.")
       }
     }
   });
   $("#menu-3support").click(function() {
     if (userTurn) {
-      if (hero[user].energy_left >= 3) {
-        if (userSuppsSummoned == 0) {
-          userSupp = randomG(0, epicSuppCount);
-          //userSupp = 1;
-          msg.append($('<li>').text(hero[user].name + " summoned " + epicSupp[userSupp].name));
-          scroll();
-          epicSuppPrint(userSupp);
-          userSuppsSummoned++;
-        }
-        else if (userSuppsSummoned == 1) {
-          do {
-            userSupp2 = randomG(0, epicSuppCount);
-          } while ($('#support-name').text() == epicSupp[userSupp2].name);
-          msg.append($('<li>').text(hero[user].name + " summoned " + epicSupp[userSupp2].name));
-          scroll();
-          epicSuppPrint(userSupp2, true);
-          userSuppsSummoned++;
+      if (epicArr[0].length -1) {
+        if (!epicSummoned) {
+          if (hero[user].energy_left >= 3)
+            basicReplace(userSuppsSummoned);
+          else
+            alert("You dont have enough like's to summon an Epic Support.")
         }
         else {
-          alert("You can only have 2 supports summoned.")
+          alert("You already played an Epic Support this turn.")
         }
       }
       else {
-        alert("You dont have enough like's to summon a 3 cost support.")
+        alert("You ran out of Epic Support Cards.")
       }
     }
   });
@@ -327,36 +297,19 @@ $('#resetCountdown').on('click', function () {
   });
   $("#menu2-1support").click(function() {
     if (!userTurn) {
-      if (!basicSummoned) {
-        if (hero[user2].energy_left > 0) {
-          if (user2SuppsSummoned == 0) {
-            user2Supp = randomG(0, basicSuppCount);
-            msg.append($('<li>').text(hero[user2].name + " summoned " + basicSupp[user2Supp].name));
-            scroll();
-            basicSuppPrint(user2Supp);
-            basicSummoned = true;
-            user2SuppsSummoned++;
-          }
-          else if (user2SuppsSummoned == 1){
-            do {
-              user2Supp2 = randomG(0, basicSuppCount);
-            } while ($('#support-name2').text() == basicSupp[user2Supp2].name);
-            msg.append($('<li>').text(hero[user2].name + " summoned " + basicSupp[user2Supp2].name));
-            scroll();
-            basicSuppPrint(user2Supp2, true);
-            basicSummoned = true;
-            user2SuppsSummoned++;
-          }
-          else if (user2SuppsSummoned == 2) {
-            suppReplace();
-          }
+      if (basicArr[1].length > 2) {
+        if (!basicSummoned) {
+          if (hero[user2].energy_left > 0)
+            basicReplace(user2SuppsSummoned, true);
+          else
+            alert("You don't have enough like's to summon a Basic Support.");
         }
         else {
-          alert("You don't have enough likes");
+          alert("You already played a Basic Support this turn.");
         }
       }
       else {
-        alert("You already played a Basic Support this turn")
+        alert("You ran out of Basic Support Cards.");
       }
     }
   });
@@ -385,7 +338,7 @@ $('#resetCountdown').on('click', function () {
         }
       }
       else {
-        alert("You dont have enough like's to summon a 3 cost support.")
+        alert("You dont have enough like's to summon an Epic Support.")
       }
     }
   });
