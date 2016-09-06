@@ -1,39 +1,8 @@
 $( document ).ready(function() {
-/*  var timer = new Tock({
-      callback: function () {
-          $('#clockface').val(timer.msToTime(timer.lap()));
-      }
-  });
-
-  var countdown = Tock({
-    countdown: true,
-    interval: 250,
-    callback: function () {
-        console.log(countdown.lap() / 1000);
-        $('#countdown_clock').val(timer.msToTime(countdown.lap()));
-    },
-    complete: function () {
-        console.log('end');
-        alert("Time's up!");
-    }
-});
-$('#startCountdown').on('click', function () {
-    countdown.start($('#countdown_clock').val());
-});
-$('#pauseCountdown').on('click', function () {
-    countdown.pause();
-});
-$('#stopCountdown').on('click', function () {
-    countdown.stop();
-});
-$('#resetCountdown').on('click', function () {
-    countdown.stop();
-    $('#countdown_clock').val('00:10');
-});*/
   var msg = $('#messages');
   // ------- Local Play-------- ///
   user = randomG(0, 9);
-  user2 = randomG(0, 9);
+  user2 = 2//randomG(0, 9);
   console.log(msg);
   userCardPrint();
   userTurn = true;

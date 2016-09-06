@@ -24,8 +24,15 @@ div#content {
     width: 100vw;
     height: 100vh;
 }
+div#messages_cont {
+    height: 34.5vh;
+    width: 18vw;
+    float: left;
+    padding-left: .6vw;
+    padding-top: .6vh;
+    padding-bottom: 1.6vh;
+}
 #messages {
-  margin-left: 5px;
   width: 17vw;
   height: 33vh;
   background: white;
@@ -33,9 +40,7 @@ div#content {
   list-style-position: inside;
   overflow: hidden;
   overflow-y: auto;
-  border: 4px #8c7b39 solid;
-  position: relative;
-  float: left;
+  border: .6vh #8c7b39 solid;
 }
 #messages li {
     padding: 4px 6px;
@@ -52,27 +57,27 @@ div#left-side {
 }
 div.turn-menu {
     width: 18vw;
-    padding: 4px;
+    padding: 0.4vw;
     border-radius: 5px;
     font-family: arial;
     float: left;
-    margin-right: 10px;
-    height: 29vh;
+    height: 27.4vh;
 }
 div#turn-menu2 {
     float: left;
+    margin-top: 0.2vh;
 }
 .menu-row {
-    background: #ffd746;
+    background: #de7e25;
     text-align: center;
     font-weight: bold;
     width: 18vw;
-    margin: 0 auto;
-    height: 27px;
-    margin-bottom: 11px;
-    line-height: 27px;
+    height: 3.6vh;
+    margin-bottom: 1.4vh;
+    line-height: 3.6vh;
     cursor: pointer;
-    font-size: 1.8vh;
+    font-size: 1.9vh;
+    padding: 0.1vh;
 }
 .menu-row:hover {
     background: #2d6890;
@@ -98,15 +103,17 @@ div#card-cont2 {
     left: 0;
 }
 div.card {
-  border: 5px solid #ffd746;
+  /*border: 5px solid #ffd746;*/
+  /*background: #ecd9bf;*/
+  border: 5px solid #fff2c1;
   width: 16vw;
   padding: 1%;
   border-radius: 5px;
-  background: #ecd9bf;
+  background: #de7e25;
   font-family: arial;
-  /*display: table;*/
   float:left;
   margin-right: 0.6vw;
+  max-height: 40vh;
 /*position: relative;
 -webkit-transition: all 200ms ease-in;
 -webkit-transform: scale(1);
@@ -183,7 +190,7 @@ div.card-hp {
 }
 div.move{
   width: 16vw;
-  padding-top: 7px;
+  padding-top: .8vh;
 }
 div.move-name {
     float: left;
@@ -201,7 +208,7 @@ div.move2b-cost {
     float: left;
 }
 div.move-cost img {
-    max-width: 17px;
+    max-width: 1.4vw;
     padding-left: 4px;
 }
 div.move2b-cost img {
@@ -255,7 +262,7 @@ div#card-moveset {
   padding-top: 10px;
 }
 div#move2 {
-  padding-top: 12px;
+    padding-top: .8vh;
 }
 div#move2b-cost {
     width: 100%;
@@ -291,7 +298,8 @@ div.hero-energy span {
 
 /* Item Card CSS */
 div.item {
-    background: #b1b1b3;
+    /*background: #b1b1b3;*/
+    background: #6c7ea5;
 }
 div.card-name {
   text-align: center;
@@ -314,8 +322,8 @@ div#item-card2 {
 
 /* Support CSS */
 div.support {
-  /*background: radial-gradient(100% 16%, #5b4c7d, #f3a46c);*/ /*#ffbb67;*/
-  background: #f3a46c;
+  /*background: #f3a46c;*/
+  background: #4da56b;
 }
 div.card-name {
   font-family: comic sans-serif;

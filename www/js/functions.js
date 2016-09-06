@@ -315,6 +315,7 @@ function basicSuppPrint(tempSupp, slot2) {
   $('#support' + slot + '-hp' + idNum).text(basicSupp[tempSupp].hp);
   $('#support' + slot + '-img' + idNum).attr("src", basicSupp[tempSupp].img);
   $('#support' + slot + '-effect' + idNum).html(basicSupp[tempSupp].effect);
+  $('div#support' + slot +'-card' + idNum).css('background', '#4da56b');
   hero[tempUser].energy_left--;
   energyText(1, true);
   if (tempSupp == 0)
@@ -329,6 +330,7 @@ function epicSuppPrint(tempSupp, slot2) {
   $('#support' + slot + '-hp' + idNum).text(epicSupp[tempSupp].hp);
   $('#support' + slot + '-img' + idNum).attr("src", epicSupp[tempSupp].img);
   $('#support' + slot + '-effect' + idNum).html(epicSupp[tempSupp].effect);
+  $('div#support' + slot +'-card' + idNum).css('background', '#98508a');
   hero[tempUser].energy_left-= 3;
   energyText(3, true);
   if (tempSupp == 0)
@@ -424,9 +426,9 @@ function basicReplace(suppsSummoned, basic) {
           userBasicCount--;
         }
         else {
-          if (basicArr[player].length - 1 >= userSupp && $('#support-name' + idNum).text() == basicArr[player][user2Supp].name) // if/elseif checks if replacing a basic or epic on user2 slot1
+          if (basicArr[player].length - 1 >= user2Supp && $('#support-name' + idNum).text() == basicArr[player][user2Supp].name) // if/elseif checks if replacing a basic or epic on user2 slot1
             basicArr[player].splice(user2Supp, 1);
-          else if (epicArr[player].length - 1 >= userSupp && $('#support-name' + idNum).text() == epicArr[player][user2Supp].name)
+          else if (epicArr[player].length - 1 >= user2Supp && $('#support-name' + idNum).text() == epicArr[player][user2Supp].name)
             epicArr[player].splice(user2Supp, 1);
           user2Supp = newSupp;
           user2BasicCount--;

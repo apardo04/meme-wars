@@ -9,3 +9,9 @@ else if ($('#support-name' + idNum).text() == epicArr[player][tempSupp])
   epicArr[player].splice(tempSupp, 1);
 else
   console.log("Error replacing Supp: $('#support-name' + idNum).text() = " + $('#support-name' + idNum).text() + "basicArr[player][tempSupp]/ epic = " basicArr[player][tempSupp] + " " + epicArr[player][tempSupp]);
+
+basic cards background: #4da56b
+epic cards background: #98508a
+item background: #6c7ea5;
+
+suh dude audio
